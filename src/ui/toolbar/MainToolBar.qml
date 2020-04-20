@@ -119,6 +119,7 @@ Rectangle {
                 exclusiveGroup:     mainActionGroup
                 source:             "/qmlimages/Plan.svg"
                 onClicked:          toolBar.showPlanView()
+                visible:            false
             }
 
             QGCToolBarButton {
@@ -126,7 +127,7 @@ Rectangle {
                 anchors.top:        parent.top
                 anchors.bottom:     parent.bottom
                 exclusiveGroup:     mainActionGroup
-                source:             "/qmlimages/PaperPlane.svg"
+                source:             "/qmlimages/deleaves.svg"
                 onClicked:          toolBar.showFlyView()
             }
 
@@ -136,8 +137,8 @@ Rectangle {
                 anchors.bottom:     parent.bottom
                 exclusiveGroup:     mainActionGroup
                 source:             "/qmlimages/Analyze.svg"
-                visible:            !ScreenTools.isMobile && QGroundControl.corePlugin.showAdvancedUI
                 onClicked:          toolBar.showAnalyzeView()
+                visible:            false
             }
 
             Rectangle {

@@ -61,7 +61,7 @@ Item {
     QGCLabel {
         id:                     waitForVehicle
         anchors.verticalCenter: parent.verticalCenter
-        text:                   qsTr("Waiting For Vehicle Connection")
+        text:                   qsTr("Waiting For DeLeaves Sampling Tool Connection")
         font.pointSize:         ScreenTools.mediumFontPointSize
         font.family:            ScreenTools.demiboldFontFamily
         color:                  qgcPal.colorRed

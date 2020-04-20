@@ -154,6 +154,7 @@ Item {
         }
     }
     Column {
+        visible:                false
         id:                     instrumentsColumn
         spacing:                ScreenTools.defaultFontPixelHeight * 0.25
         anchors.top:            parent.top
