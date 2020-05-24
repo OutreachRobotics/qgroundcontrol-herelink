@@ -217,7 +217,7 @@ Rectangle {
         height:         toolBar.height * 0.05
         width:          _activeVehicle ? _activeVehicle.parameterManager.loadProgress * parent.width : 0
         color:          qgcPal.colorGreen
-        visible:        !largeProgressBar.visible
+        visible:        false
     }
 
     // Large parameter download progress bar
@@ -228,7 +228,7 @@ Rectangle {
         anchors.right:  parent.right
         height:         parent.height
         color:          qgcPal.window
-        visible:        _showLargeProgress
+        visible:        false
 
         property bool _initialDownloadComplete: _activeVehicle ? _activeVehicle.parameterManager.parametersReady : true
         property bool _userHide:                false
