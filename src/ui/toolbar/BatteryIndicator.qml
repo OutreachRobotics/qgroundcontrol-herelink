@@ -35,7 +35,7 @@ Item {
             if(_activeVehicle.battery.percentRemaining.value > 30) {
                 return qgcPal.colorOrange
             }
-            if(_activeVehicle.battery.percentRemaining.value > 0.1) {
+            else {
                 return qgcPal.colorRed
             }
         }
