@@ -110,6 +110,7 @@ Rectangle {
                 exclusiveGroup:     mainActionGroup
                 source:             "/qmlimages/Gears.svg"
                 onClicked:          toolBar.showSetupView()
+                visible:            false
             }
 
             QGCToolBarButton {

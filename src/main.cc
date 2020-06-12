@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
     Q_CHECK_PTR(app);
 
 #ifdef Q_OS_LINUX
-    QApplication::setWindowIcon(QIcon(":/res/resources/icons/qgroundcontrol.ico"));
+    QApplication::setWindowIcon(QIcon(":/res/resources/icons/logo_DeLeaves_square_small.ico"));
 #endif /* Q_OS_LINUX */
 
     // There appears to be a threading issue in qRegisterMetaType which can cause it to throw a qWarning

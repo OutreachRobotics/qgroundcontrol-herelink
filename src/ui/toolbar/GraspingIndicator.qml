@@ -8,9 +8,10 @@
  ****************************************************************************/
 
 import QtQuick          2.3
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.4
 import QtQuick.Layouts  1.2
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Extras 1.4
 
 import QGroundControl                       1.0
 import QGroundControl.Controls              1.0
@@ -23,38 +24,64 @@ import QGroundControl.Palette               1.0
 Item {
     id: graspingItem
     anchors.top:    parent.top
-    anchors.topMargin:      7
+    anchors.bottom:    parent.bottom
     visible:        true
-    width:          1000
+    width:          graspingRow.width
 
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
 
 
     Row {
-        QGCLabel {
+        id:             graspingRow
+        anchors.top:    parent.top
+        anchors.bottom: parent.bottom
+
+        Rectangle {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
-            verticalAlignment:  Text.AlignVCenter
-            text:               "Cut "
-            font.pointSize:     ScreenTools.mediumFontPointSize
-            color:              qgcPal.buttonText
+            width:              1
+            color:              qgcPal.text
+            visible:            _activeVehicle
         }
-        ProgressBar {
-            value: _activeVehicle.roll.value/100
-            style: ProgressBarStyle {
-                    background: Rectangle {
-                        radius: 2
-                        color: "lightgray"
-                        border.color: "gray"
-                        border.width: 1
-                        implicitWidth: 300
-                        implicitHeight: 50
-                    }
-                    progress: Rectangle {
-                        color: "forestgreen"
-                        border.color: "forestgreen"
-                    }
+
+//        QGCLabel {
+//            anchors.top:        parent.top
+//            anchors.bottom:     parent.bottom
+//            verticalAlignment:  Text.AlignVCenter
+//            text:               "Sampling "
+//            font.pointSize:     ScreenTools.mediumFontPointSize
+//            color:              qgcPal.buttonText
+//        }
+
+        Gauge {
+            id: graspingGauge
+            anchors.topMargin:      7
+            anchors.top:            parent.top
+            anchors.bottom:         parent.bottom
+            implicitWidth:          300
+            implicitHeight:         50
+            minimumValue:           0
+            maximumValue:           100
+            value:                  _activeVehicle.roll.value
+            tickmarkStepSize:       100
+            minorTickmarkCount:     0
+            orientation:            Qt.Horizontal
+            style: GaugeStyle {
+                tickmark: Item {
+                    visible: false
                 }
+                tickmarkLabel: Item {
+                    visible: false
+                }
+                background: Rectangle {
+                    color: "white"
+                    border.color: "black"
+                }
+                valueBar: Rectangle {
+                    color: "#F26E1C"
+                    implicitWidth: 45
+                }
+            }
         }
 
         QGCLabel {
