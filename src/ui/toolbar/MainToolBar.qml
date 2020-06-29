@@ -100,7 +100,8 @@ Rectangle {
                 source:             "/res/QGCLogoWhite"
                 logo:               true
                 onClicked:          toolBar.showSettingsView()
-                visible:            !QGroundControl.corePlugin.options.combineSettingsAndSetup
+//                visible:            !QGroundControl.corePlugin.options.combineSettingsAndSetup
+                visible:            false
             }
 
             QGCToolBarButton {
@@ -130,6 +131,7 @@ Rectangle {
                 exclusiveGroup:     mainActionGroup
                 source:             "/qmlimages/deleaves.svg"
                 onClicked:          toolBar.showFlyView()
+                visible:            false
             }
 
             QGCToolBarButton {
