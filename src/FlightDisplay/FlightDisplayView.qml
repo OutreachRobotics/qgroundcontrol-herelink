@@ -17,6 +17,7 @@ import QtPositioning            5.3
 import QtQuick.Layouts          1.2
 import QtQuick.Window           2.2
 import QtQml.Models             2.1
+import QtMultimedia             5.5
 
 import QGroundControl               1.0
 import QGroundControl.Airspace      1.0
@@ -158,6 +159,96 @@ QGCView {
         if (!promptForMissionRemove && vehicleArmed) {
             promptForMissionRemove = true
         }
+    }
+
+    property bool isArrowVisible: false
+    property bool isArrow: true
+    property bool tonePlay: true
+    property real arrowOrientation: 0
+
+    function getArrowOrientation() {
+        if(_activeVehicle.pitch.value < 10)
+        {
+            return 0
+        }
+        else if(_activeVehicle.pitch.value < 20)
+        {
+            return 0
+        }
+        else if(_activeVehicle.pitch.value < 30)
+        {
+            return 90
+        }
+        else if(_activeVehicle.pitch.value < 40)
+        {
+            return 180
+        }
+        else
+        {
+            return 270
+        }
+    }
+
+    function getArrowVisibility() {
+        if(_activeVehicle.pitch.value < 10)
+        {
+            return false
+        }
+        else if(_activeVehicle.pitch.value < 20)
+        {
+            return true
+        }
+        else if(_activeVehicle.pitch.value < 30)
+        {
+            return true
+        }
+        else if(_activeVehicle.pitch.value < 40)
+        {
+            return true
+        }
+        else
+        {
+            return true
+        }
+
+    }
+
+    Item {
+
+        z: 100
+        anchors.verticalCenter : parent.verticalCenter
+        width:  200
+        height: 200
+
+        Image {
+            id: angleArrow
+            source: "/qmlimages/compassInstrumentArrow.svg"
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+            visible: isArrowVisible && getArrowVisibility()
+            rotation:getArrowOrientation()
+        }
+
+
+        MouseArea {
+            anchors.fill:   parent
+            onClicked:      tonePlay = !tonePlay
+        }
+
+        Timer {
+                interval: 300; running: true; repeat: true
+                onTriggered: {
+                    isArrowVisible = !isArrowVisible
+                    angleArrow.visible && tonePlay ? playSound.play() : playSound.stop()
+                }
+        }
+
+        SoundEffect {
+            id: playSound
+            source: "/qmlimages/tone440Hz"
+            loops: SoundEffect.Infinite
+        }
+
     }
 
     Component {

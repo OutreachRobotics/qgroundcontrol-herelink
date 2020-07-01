@@ -20,26 +20,31 @@ import QGroundControl.Palette               1.0
 
 //-------------------------------------------------------------------------
 //-- DeLeaves Logo clickable
+
 Item {
     id:             deleavesLogo
     width:          deleavesIcon.width
     anchors.top:    parent.top
     anchors.bottom: parent.bottom
+    anchors.left:   parent.left
+    property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
 
     Row {
         id:             deleavesLogoRow
         anchors.top:    parent.top
         anchors.bottom: parent.bottom
+        anchors.left:   parent.left
 
         QGCColoredImage {
-            id:                 deleavesIcon
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            width:              height
-            sourceSize.width:   width
-            source:             "/qmlimages/deleaves.svg"
-            color:              "#F26E1A"
-            fillMode:           Image.PreserveAspectFit
+            id:                     deleavesIcon
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left:           parent.left
+            height:                 120
+            width:                  300
+            sourceSize.width:       width
+            source:                 "/qmlimages/deleaves.svg"
+            color:                  "#F26E1A"
+            fillMode:               Image.PreserveAspectFit
         }
     }
 
@@ -60,17 +65,11 @@ Item {
                 anchors.margins:    ScreenTools.defaultFontPixelHeight
                 anchors.centerIn:   parent
 
-                QGCLabel {
-                    text:           qsTr("Remote controller")
-                    font.family:    ScreenTools.demiboldFontFamily
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-
                 Image {
                     id:                 deleavesController
-                    width:              1000
-                    height:             500
-                    source:             "/qml/calibration/mode1/radioCenter.png"
+                    width:              1400
+                    height:             600
+                    source:             "/qmlimages/deleavesController.png"
                     fillMode:           Image.PreserveAspectFit
                 }
 
@@ -82,9 +81,9 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     QGCLabel { text: qsTr("Serial number:") }
-                    QGCLabel { text: "0123456789"}
+                    QGCLabel { text: " " + _activeVehicle.sensorsEnabledBits}
                     QGCLabel { text: qsTr("Firmware version:") }
-                    QGCLabel { text: "12.02.104"}
+                    QGCLabel { text: " " + _activeVehicle.sensorsHealthBits + "." + _activeVehicle.sensorsPresentBits + "." + Math.round(_activeVehicle.battery.current.value*100)}
                 }
             }
             Component.onCompleted: {
@@ -99,7 +98,7 @@ Item {
         anchors.fill:   parent
         onClicked: {
             var centerX = mapToItem(toolBar, x, y).x + (width / 2)
-            mainWindow.showPopUp(deleavesAbout, centerX)
+            mainWindow.showPopUp(deleavesAbout, centerX-70)
         }
     }
 }

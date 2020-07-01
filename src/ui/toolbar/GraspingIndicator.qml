@@ -44,18 +44,9 @@ Item {
             visible:            _activeVehicle
         }
 
-//        QGCLabel {
-//            anchors.top:        parent.top
-//            anchors.bottom:     parent.bottom
-//            verticalAlignment:  Text.AlignVCenter
-//            text:               "Sampling "
-//            font.pointSize:     ScreenTools.mediumFontPointSize
-//            color:              qgcPal.buttonText
-//        }
-
         Gauge {
             id: graspingGauge
-            anchors.topMargin:      7
+            anchors.topMargin:      9
             anchors.top:            parent.top
             anchors.bottom:         parent.bottom
             implicitWidth:          300

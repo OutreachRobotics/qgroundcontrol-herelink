@@ -150,7 +150,7 @@ Rectangle {
                 anchors.bottom:     parent.bottom
                 width:              1
                 color:              qgcPal.text
-                visible:            _activeVehicle
+                visible:            false
             }
         }
 

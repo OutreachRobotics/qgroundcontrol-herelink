@@ -182,6 +182,8 @@
         <file alias="AwarenessAircraft.svg">src/FlightMap/Images/AwarenessAircraft.svg</file>
         <file alias="check.svg">resources/check.svg</file>
         <file alias="deleaves.svg">src/ui/toolbar/Images/deleaves.svg</file>
+        <file alias="deleavesController.png">src/ui/toolbar/Images/deleavesController.png</file>
+        <file alias="tone440Hz">src/ui/toolbar/Images/440Hz_44100Hz_16bit_05sec.wav</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="action.svg">resources/action.svg</file>
