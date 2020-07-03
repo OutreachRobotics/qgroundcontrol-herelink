@@ -58,29 +58,130 @@ Item {
         }
     }
 
-    QGCLabel {
-        id:                     waitForVehicle
-        anchors.verticalCenter: parent.verticalCenter
-        text:                   qsTr("Waiting For DeLeaves Sampling Tool Connection")
-        font.pointSize:         ScreenTools.mediumFontPointSize
-        font.family:            ScreenTools.demiboldFontFamily
-        color:                  qgcPal.colorRed
-        visible:                !_activeVehicle
-    }
+    property bool buttonClicked: true
 
-    Row {
-        id:             indicatorRow
-        anchors.top:    parent.top
-        anchors.bottom: parent.bottom
-        spacing:        ScreenTools.defaultFontPixelWidth * 1.5
-        visible:        _activeVehicle && !_communicationLost
+    RowLayout {
+        id:                     deleavesLogo
+        anchors.bottomMargin:   1
+        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth / 2
+        anchors.fill:           parent
+        spacing:                ScreenTools.defaultFontPixelWidth * 2
 
-        Repeater {
-            model:      _activeVehicle ? _activeVehicle.toolBarIndicators : []
-            Loader {
-                anchors.top:    parent.top
-                anchors.bottom: parent.bottom
-                source:         modelData;
+        Row {
+            id:             deleavesLogoRow
+            Layout.fillHeight:  true
+            spacing:            ScreenTools.defaultFontPixelWidth / 2
+
+            QGCColoredImage {
+                id:                     deleavesIcon
+                anchors.verticalCenter: parent.verticalCenter
+                height:                 120
+                width:                  120
+                sourceSize.width:       width
+                source:                 "/qmlimages/deleaves.svg"
+                color:                  "#F26E1A"
+                fillMode:               Image.PreserveAspectFit
+            }
+
+            Rectangle {
+                color:                  buttonClicked ? "transparent" : "#F26E1A"
+                anchors.verticalCenter: parent.verticalCenter
+                height:                 100
+                width:                  100
+
+                QGCColoredImage {
+                    id:                     hamburgerIcon
+                    anchors.fill:           parent
+                    sourceSize.width:       width
+                    source:                 "qrc:/qmlimages/Hamburger.svg"
+                    color:                  buttonClicked ? "#F26E1A" : "transparent"
+                    fillMode:               Image.PreserveAspectFit
+
+                }
+
+                MouseArea {
+                    anchors.fill:   parent
+                    onClicked: {
+                        var centerX = mapToItem(toolBar, x, y).x + (width / 2)
+                        mainWindow.showPopUp(deleavesAbout, centerX-70)
+                        buttonClicked = !buttonClicked
+                    }
+                }
+            }
+
+            Rectangle {
+                width: ScreenTools.defaultFontPixelWidth * 6
+                height: 10
+                anchors.verticalCenter: parent.verticalCenter
+                color: "white"
+                opacity: 0
+            }
+
+            QGCLabel {
+                id:                     waitForVehicle
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 4
+                text:                   qsTr("Waiting For DeLeaves Sampling Tool Connection")
+                font.pointSize:         ScreenTools.mediumFontPointSize
+                font.family:            ScreenTools.demiboldFontFamily
+                color:                  qgcPal.colorRed
+                visible:                !_activeVehicle
+            }
+
+            Repeater {
+                model:      _activeVehicle ? _activeVehicle.toolBarIndicators : []
+                Loader {
+                    anchors.top:    parent.top
+                    anchors.bottom: parent.bottom
+                    source:         modelData;
+                    visible:        _activeVehicle && !_communicationLost
+                }
+            }
+        }
+
+        Component {
+            id: deleavesAbout
+
+            Rectangle {
+                width:  deleavesColumn.width   + ScreenTools.defaultFontPixelWidth  * 3
+                height: deleavesColumn.height  + ScreenTools.defaultFontPixelHeight * 2
+                radius: ScreenTools.defaultFontPixelHeight * 0.5
+                color:  qgcPal.window
+                border.color:   qgcPal.text
+
+                Column {
+                    id: deleavesColumn
+                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                    width:              Math.max(deleavesGrid.width, deleavesController.width)
+                    anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    anchors.centerIn:   parent
+
+                    Image {
+                        id:                 deleavesController
+                        width:              1400
+                        height:             600
+                        source:             "/qmlimages/deleavesController.png"
+                        fillMode:           Image.PreserveAspectFit
+                    }
+
+                    GridLayout {
+                        id:                 deleavesGrid
+                        anchors.margins:    ScreenTools.defaultFontPixelHeight
+                        columnSpacing:      ScreenTools.defaultFontPixelWidth
+                        columns:            2
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        QGCLabel { text: qsTr("Serial number:") }
+                        QGCLabel { text: " " + _activeVehicle.sensorsEnabledBits}
+                        QGCLabel { text: qsTr("Firmware version:") }
+                        QGCLabel { text: " " + _activeVehicle.sensorsHealthBits + "." + _activeVehicle.sensorsPresentBits + "." + Math.round(_activeVehicle.battery.current.value*100)}
+                    }
+                }
+                Component.onCompleted: {
+                    var pos = mapFromItem(toolBar, centerX, toolBar.height)
+                    x = pos.x
+                    y = pos.y + ScreenTools.defaultFontPixelHeight
+                }
             }
         }
     }

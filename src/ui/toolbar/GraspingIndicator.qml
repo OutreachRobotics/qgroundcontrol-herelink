@@ -36,19 +36,9 @@ Item {
         anchors.top:    parent.top
         anchors.bottom: parent.bottom
 
-        Rectangle {
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            width:              1
-            color:              qgcPal.text
-            visible:            _activeVehicle
-        }
-
         Gauge {
             id: graspingGauge
-            anchors.topMargin:      9
-            anchors.top:            parent.top
-            anchors.bottom:         parent.bottom
+            anchors.verticalCenter: parent.verticalCenter
             implicitWidth:          300
             implicitHeight:         50
             minimumValue:           0

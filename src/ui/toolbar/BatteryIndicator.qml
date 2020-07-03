@@ -74,6 +74,14 @@ Item {
                 anchors.margins:    ScreenTools.defaultFontPixelHeight
                 anchors.centerIn:   parent
 
+                Rectangle {
+                    width: ScreenTools.defaultFontPixelWidth
+                    height: 10
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "white"
+                    opacity: 0
+                }
+
                 QGCLabel {
                     id:             battLabel
                     text:           qsTr("Battery Status")

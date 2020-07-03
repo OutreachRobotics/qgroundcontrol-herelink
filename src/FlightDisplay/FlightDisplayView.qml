@@ -163,7 +163,6 @@ QGCView {
 
     property bool isArrowVisible: false
     property bool isArrow: true
-    property bool tonePlay: true
     property real arrowOrientation: 0
 
     function getArrowOrientation() {
@@ -229,25 +228,13 @@ QGCView {
             rotation:getArrowOrientation()
         }
 
-
-        MouseArea {
-            anchors.fill:   parent
-            onClicked:      tonePlay = !tonePlay
-        }
-
         Timer {
                 interval: 300; running: true; repeat: true
                 onTriggered: {
                     isArrowVisible = !isArrowVisible
-                    angleArrow.visible && tonePlay ? playSound.play() : playSound.stop()
                 }
         }
 
-        SoundEffect {
-            id: playSound
-            source: "/qmlimages/tone440Hz"
-            loops: SoundEffect.Infinite
-        }
 
     }
 
