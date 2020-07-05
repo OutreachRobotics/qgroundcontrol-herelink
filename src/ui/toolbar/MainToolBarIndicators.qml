@@ -72,19 +72,18 @@ Item {
             Layout.fillHeight:  true
             spacing:            ScreenTools.defaultFontPixelWidth / 2
 
-            QGCColoredImage {
+            Image {
                 id:                     deleavesIcon
                 anchors.verticalCenter: parent.verticalCenter
                 height:                 120
                 width:                  120
                 sourceSize.width:       width
-                source:                 "/qmlimages/deleaves.svg"
-                color:                  "#F26E1A"
+                source:                 "/qmlimages/deleavesLogo2.png"
                 fillMode:               Image.PreserveAspectFit
             }
 
             Rectangle {
-                width: ScreenTools.defaultFontPixelWidth
+                width: ScreenTools.defaultFontPixelWidth / 2
                 height: 10
                 anchors.verticalCenter: parent.verticalCenter
                 color: "white"
@@ -117,7 +116,22 @@ Item {
             }
 
             Rectangle {
-                width: ScreenTools.defaultFontPixelWidth * 6
+                width: ScreenTools.defaultFontPixelWidth
+                height: 10
+                anchors.verticalCenter: parent.verticalCenter
+                color: "white"
+                opacity: 0
+            }
+
+            Rectangle {
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: 1
+                color: qgcPal.text
+            }
+
+            Rectangle {
+                width: ScreenTools.defaultFontPixelWidth
                 height: 10
                 anchors.verticalCenter: parent.verticalCenter
                 color: "white"
@@ -150,54 +164,82 @@ Item {
             id: deleavesAbout
 
             Rectangle {
-                width:  deleavesGrid.width   + ScreenTools.defaultFontPixelWidth  * 3
-                height: deleavesGrid.height  + ScreenTools.defaultFontPixelHeight * 2
+                width:  deleavesAboutColumn.width   + ScreenTools.defaultFontPixelWidth  * 3
+                height: deleavesAboutColumn.height  + ScreenTools.defaultFontPixelHeight * 2
                 radius: ScreenTools.defaultFontPixelHeight * 0.5
                 color:  qgcPal.window
                 border.color:   qgcPal.text
 
-                GridLayout {
-                    id:                 deleavesGrid
+                Column {
+                    id:                 deleavesAboutColumn
+                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                    width:              deleavesGrid.width + ScreenTools.defaultFontPixelWidth  * 2
+                    height:             deleavesGrid.height + deleavesAboutLogo.height + deleavesWebsite.height + ScreenTools.defaultFontPixelHeight
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     anchors.centerIn:   parent
-                    columnSpacing:      ScreenTools.defaultFontPixelWidth
-                    columns:            2
-                    anchors.horizontalCenter: parent.horizontalCenter
 
-                    QGCLabel {
-                        text: qsTr("Herelink Serial Number:")
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    QGCLabel {
-                        text: "HX4060759500366"
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    QGCLabel {
-                        text: qsTr("Herelink Ground Station Version:")
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    QGCLabel {
-                        text: "1.0.12"
-                        verticalAlignment: Text.AlignVCenter
+                    Image {
+                        id:                     deleavesAboutLogo
+                        height:                 400
+                        width:                  400
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        source:                 "/qmlimages/deleavesLogo.png"
+                        fillMode:               Image.PreserveAspectFit
                     }
 
-                    QGCLabel {
-                        text: qsTr("DeLeaves Serial Number:")
-                        verticalAlignment: Text.AlignVCenter
+                   GridLayout {
+                        id:                 deleavesGrid
+                        anchors.margins:    ScreenTools.defaultFontPixelHeight
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        columnSpacing:      ScreenTools.defaultFontPixelWidth
+                        columns:            2
+
+                        QGCLabel {
+                            text: qsTr("Herelink Serial Number:")
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        QGCLabel {
+                            text: "HX4060759500366"
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        QGCLabel {
+                            text: qsTr("Herelink Ground Station Version:")
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        QGCLabel {
+                            text: "1.0.12"
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        QGCLabel {
+                            text: qsTr("DeLeaves Serial Number:")
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        QGCLabel {
+                            text: _activeVehicle? " " + _activeVehicle.sensorsEnabledBits : "Not Connected"
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        QGCLabel {
+                            text: qsTr("DeLeaves Firmware Version:")
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        QGCLabel {
+                            text: _activeVehicle ? " " + _activeVehicle.sensorsHealthBits + "." + _activeVehicle.sensorsPresentBits + "." + Math.round(_activeVehicle.battery.current.value*100) : "Not Connected"
+                            verticalAlignment: Text.AlignVCenter
+                        }
                     }
+
                     QGCLabel {
-                        text: _activeVehicle? " " + _activeVehicle.sensorsEnabledBits : "Not Connected"
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    QGCLabel {
-                        text: qsTr("DeLeaves Firmware Version:")
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    QGCLabel {
-                        text: _activeVehicle ? " " + _activeVehicle.sensorsHealthBits + "." + _activeVehicle.sensorsPresentBits + "." + Math.round(_activeVehicle.battery.current.value*100) : "Not Connected"
-                        verticalAlignment: Text.AlignVCenter
+                       id:                     deleavesWebsite
+                       text:                   "www.deleaves-drone.com"
+                       anchors.horizontalCenter: parent.horizontalCenter
+                       font.pointSize:         ScreenTools.mediumFontPointSize
+                       font.family:            ScreenTools.demiboldFontFamily
+                       color:                  qgcPal.text
                     }
                 }
+
+
                 Component.onCompleted: {
                     var pos = mapFromItem(toolBar, centerX, toolBar.height)
                     x = pos.x

@@ -69,7 +69,7 @@ Item {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               " " + Math.floor(_activeVehicle.roll.value) + "%"
+            text:               Math.floor(_activeVehicle.roll.value) + "%"
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
         }

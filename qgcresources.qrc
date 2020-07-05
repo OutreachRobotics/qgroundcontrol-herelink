@@ -184,6 +184,9 @@
         <file alias="deleaves.svg">src/ui/toolbar/Images/deleaves.svg</file>
         <file alias="deleavesController.png">src/ui/toolbar/Images/deleavesController.png</file>
         <file alias="tone440Hz">src/ui/toolbar/Images/440Hz_44100Hz_16bit_05sec.wav</file>
+        <file alias="deleavesLogo.svg">src/ui/toolbar/Images/deleaves_logo.svg</file>
+        <file alias="deleavesLogo.png">src/ui/toolbar/Images/deleaves_logo.png</file>
+        <file alias="deleavesLogo2.png">src/ui/toolbar/Images/deleaves_logo2.png</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="action.svg">resources/action.svg</file>
@@ -349,4 +352,5 @@
         <file alias="joystickYawLeft.png">resources/calibration/joystick/mode4/joystickYawLeft.png</file>
         <file alias="joystickYawRight.png">resources/calibration/joystick/mode4/joystickYawRight.png</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

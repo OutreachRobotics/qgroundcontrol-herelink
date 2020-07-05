@@ -23,76 +23,68 @@ import QGroundControl.Palette               1.0
 Item {
     anchors.top:    parent.top
     anchors.bottom: parent.bottom
-    width:          _hasTelemetry ? telemIcon.width * 1.1 : 0
+    width:          _hasTelemetry ? batteryIndicatorRow.width * 1.1 : 0
     visible:        _hasTelemetry
 
     property var  _activeVehicle:   QGroundControl.multiVehicleManager.activeVehicle
     property bool _hasTelemetry:    _activeVehicle ? _activeVehicle.telemetryLRSSI !== 0 : false
 
-    Component {
-        id: telemRSSIInfo
+    function getSignalStrengthURL() {
+        if(_activeVehicle.telemetryLRSSI<70)
+            return "/qmlimages/Signal100.svg"
+        else if(_activeVehicle.telemetryLRSSI<80)
+            return "/qmlimages/Signal80.svg"
+        else if(_activeVehicle.telemetryLRSSI<90)
+            return "/qmlimages/Signal60.svg"
+        else if(_activeVehicle.telemetryLRSSI<100)
+            return "/qmlimages/Signal40.svg"
+        else if(_activeVehicle.telemetryLRSSI<110)
+            return "/qmlimages/Signal20.svg"
+        else
+            return "/qmlimages/Signal0.svg"
+    }
+
+    function getSignalStrengthColor() {
+        if(_activeVehicle.telemetryLRSSI<100)
+            return qgcPal.text
+        else
+            return "red"
+    }
+
+    Row {
+        id:             batteryIndicatorRow
+        anchors.top:    parent.top
+        anchors.bottom: parent.bottom
+
         Rectangle {
-            width:  telemCol.width   + ScreenTools.defaultFontPixelWidth  * 3
-            height: telemCol.height  + ScreenTools.defaultFontPixelHeight * 2
-            radius: ScreenTools.defaultFontPixelHeight * 0.5
-            color:  qgcPal.window
-            border.color:   qgcPal.text
-            Column {
-                id:                 telemCol
-                spacing:            ScreenTools.defaultFontPixelHeight * 0.5
-                width:              Math.max(telemGrid.width, telemLabel.width)
-                anchors.margins:    ScreenTools.defaultFontPixelHeight
-                anchors.centerIn:   parent
-                QGCLabel {
-                    id:             telemLabel
-                    text:           qsTr("Telemetry RSSI Status")
-                    font.family:    ScreenTools.demiboldFontFamily
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-                GridLayout {
-                    id:                 telemGrid
-                    anchors.margins:    ScreenTools.defaultFontPixelHeight
-                    columnSpacing:      ScreenTools.defaultFontPixelWidth
-                    columns:            2
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    QGCLabel { text: qsTr("Local RSSI:") }
-                    QGCLabel { text: _activeVehicle.telemetryLRSSI + " dBm"}
-                    QGCLabel { text: qsTr("Remote RSSI:") }
-                    QGCLabel { text: _activeVehicle.telemetryRRSSI + " dBm"}
-                    QGCLabel { text: qsTr("RX Errors:") }
-                    QGCLabel { text: _activeVehicle.telemetryRXErrors }
-                    QGCLabel { text: qsTr("Errors Fixed:") }
-                    QGCLabel { text: _activeVehicle.telemetryFixed }
-                    QGCLabel { text: qsTr("TX Buffer:") }
-                    QGCLabel { text: _activeVehicle.telemetryTXBuffer }
-                    QGCLabel { text: qsTr("Local Noise:") }
-                    QGCLabel { text: _activeVehicle.telemetryLNoise }
-                    QGCLabel { text: qsTr("Remote Noise:") }
-                    QGCLabel { text: _activeVehicle.telemetryRNoise }
-                }
-            }
-            Component.onCompleted: {
-                var pos = mapFromItem(toolBar, centerX - (width / 2), toolBar.height)
-                x = pos.x
-                y = pos.y + ScreenTools.defaultFontPixelHeight
-            }
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
         }
-    }
-    QGCColoredImage {
-        id:                 telemIcon
-        anchors.top:        parent.top
-        anchors.bottom:     parent.bottom
-        width:              height
-        sourceSize.height:  height
-        source:             "/qmlimages/TelemRSSI.svg"
-        fillMode:           Image.PreserveAspectFit
-        color:              qgcPal.buttonText
-    }
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            var centerX = mapToItem(toolBar, x, y).x + (width / 2)
-            mainWindow.showPopUp(telemRSSIInfo, centerX)
+
+        QGCColoredImage {
+            id:                 telemIcon
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            width:              height
+            sourceSize.height:  height
+            source:             "/qmlimages/RC.svg"
+            fillMode:           Image.PreserveAspectFit
+            color:              qgcPal.text
         }
+
+        QGCColoredImage {
+            id:                 telemSignal
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            width:              height
+            sourceSize.height:  height
+            source:             getSignalStrengthURL()
+            fillMode:           Image.PreserveAspectFit
+            color:              getSignalStrengthColor()
+        }
+
     }
 }

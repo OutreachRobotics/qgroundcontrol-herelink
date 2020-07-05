@@ -697,7 +697,7 @@ VideoReceiver::startRecording(const QString &videoFile)
     }
 
     //-- Disk usage maintenance
-    _cleanupOldVideos();
+//    _cleanupOldVideos();
 
     _sink           = new Sink();
     _sink->teepad   = gst_element_get_request_pad(_tee, "src_%u");
