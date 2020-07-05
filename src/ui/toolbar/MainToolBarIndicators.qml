@@ -58,7 +58,7 @@ Item {
         }
     }
 
-    property bool buttonClicked: true
+    property bool buttonClicked: false
 
     RowLayout {
         id:                     deleavesLogo
@@ -84,7 +84,15 @@ Item {
             }
 
             Rectangle {
-                color:                  buttonClicked ? "transparent" : "#F26E1A"
+                width: ScreenTools.defaultFontPixelWidth
+                height: 10
+                anchors.verticalCenter: parent.verticalCenter
+                color: "white"
+                opacity: 0
+            }
+
+            Rectangle {
+                color:                  buttonClicked ? "#F26E1A" : "transparent"
                 anchors.verticalCenter: parent.verticalCenter
                 height:                 100
                 width:                  100
@@ -94,7 +102,7 @@ Item {
                     anchors.fill:           parent
                     sourceSize.width:       width
                     source:                 "qrc:/qmlimages/Hamburger.svg"
-                    color:                  buttonClicked ? "#F26E1A" : "transparent"
+                    color:                  buttonClicked ? "transparent" : "#F26E1A"
                     fillMode:               Image.PreserveAspectFit
 
                 }
@@ -102,9 +110,8 @@ Item {
                 MouseArea {
                     anchors.fill:   parent
                     onClicked: {
-                        var centerX = mapToItem(toolBar, x, y).x + (width / 2)
-                        mainWindow.showPopUp(deleavesAbout, centerX-70)
-                        buttonClicked = !buttonClicked
+                        var centerX = mapToItem(toolBar, x, y).x
+                        mainWindow.showPopUp(deleavesMenu, centerX)
                     }
                 }
             }
@@ -143,38 +150,52 @@ Item {
             id: deleavesAbout
 
             Rectangle {
-                width:  deleavesColumn.width   + ScreenTools.defaultFontPixelWidth  * 3
-                height: deleavesColumn.height  + ScreenTools.defaultFontPixelHeight * 2
+                width:  deleavesGrid.width   + ScreenTools.defaultFontPixelWidth  * 3
+                height: deleavesGrid.height  + ScreenTools.defaultFontPixelHeight * 2
                 radius: ScreenTools.defaultFontPixelHeight * 0.5
                 color:  qgcPal.window
                 border.color:   qgcPal.text
 
-                Column {
-                    id: deleavesColumn
-                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
-                    width:              Math.max(deleavesGrid.width, deleavesController.width)
+                GridLayout {
+                    id:                 deleavesGrid
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     anchors.centerIn:   parent
+                    columnSpacing:      ScreenTools.defaultFontPixelWidth
+                    columns:            2
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-                    Image {
-                        id:                 deleavesController
-                        width:              1400
-                        height:             600
-                        source:             "/qmlimages/deleavesController.png"
-                        fillMode:           Image.PreserveAspectFit
+                    QGCLabel {
+                        text: qsTr("Herelink Serial Number:")
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    QGCLabel {
+                        text: "HX4060759500366"
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    QGCLabel {
+                        text: qsTr("Herelink Ground Station Version:")
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    QGCLabel {
+                        text: "1.0.12"
+                        verticalAlignment: Text.AlignVCenter
                     }
 
-                    GridLayout {
-                        id:                 deleavesGrid
-                        anchors.margins:    ScreenTools.defaultFontPixelHeight
-                        columnSpacing:      ScreenTools.defaultFontPixelWidth
-                        columns:            2
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        QGCLabel { text: qsTr("Serial number:") }
-                        QGCLabel { text: " " + _activeVehicle.sensorsEnabledBits}
-                        QGCLabel { text: qsTr("Firmware version:") }
-                        QGCLabel { text: " " + _activeVehicle.sensorsHealthBits + "." + _activeVehicle.sensorsPresentBits + "." + Math.round(_activeVehicle.battery.current.value*100)}
+                    QGCLabel {
+                        text: qsTr("DeLeaves Serial Number:")
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    QGCLabel {
+                        text: _activeVehicle? " " + _activeVehicle.sensorsEnabledBits : "Not Connected"
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    QGCLabel {
+                        text: qsTr("DeLeaves Firmware Version:")
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    QGCLabel {
+                        text: _activeVehicle ? " " + _activeVehicle.sensorsHealthBits + "." + _activeVehicle.sensorsPresentBits + "." + Math.round(_activeVehicle.battery.current.value*100) : "Not Connected"
+                        verticalAlignment: Text.AlignVCenter
                     }
                 }
                 Component.onCompleted: {
@@ -184,7 +205,107 @@ Item {
                 }
             }
         }
+
+        Component {
+            id: deleavesController
+
+            Rectangle {
+                width:  deleavesControllerImage.width   + ScreenTools.defaultFontPixelWidth  * 3
+                height: deleavesControllerImage.height  + ScreenTools.defaultFontPixelHeight * 2
+                radius: ScreenTools.defaultFontPixelHeight * 0.5
+                color:  qgcPal.window
+                border.color:   qgcPal.text
+
+                Image {
+                    id:                 deleavesControllerImage
+                    anchors.centerIn:   parent
+                    width:              1645
+                    height:             720
+                    source:             "/qmlimages/deleavesController.png"
+                    fillMode:           Image.PreserveAspectFit
+                }
+
+                Component.onCompleted: {
+                    var pos = mapFromItem(toolBar, centerX, toolBar.height)
+                    x = pos.x
+                    y = pos.y + ScreenTools.defaultFontPixelHeight
+                }
+            }
+        }
+
+        Component {
+            id: deleavesMenu
+
+            Rectangle {
+                width:  deleavesMenuColumn.width   + ScreenTools.defaultFontPixelWidth  * 6
+                height: deleavesMenuColumn.height  + ScreenTools.defaultFontPixelHeight
+                radius: ScreenTools.defaultFontPixelHeight * 0.5
+                color:  qgcPal.window
+                border.color:   qgcPal.text
+
+                Column {
+                    id: deleavesMenuColumn
+                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                    width:              deleavesControllerMenu.width
+                    anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    anchors.centerIn:   parent
+
+                    QGCLabel {
+                        id:                     deleavesControllerMenu
+                        height:                 ScreenTools.defaultFontPixelHeight * 2
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text:                   qsTr("Controller Configuration")
+                        font.pointSize:         ScreenTools.mediumFontPointSize
+                        font.family:            ScreenTools.demiboldFontFamily
+                        verticalAlignment: Text.AlignVCenter
+
+                        MouseArea {
+                            anchors.fill:   parent
+                            onClicked: {
+                                mainWindow.showPopUp(deleavesController, 30)
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width + ScreenTools.defaultFontPixelWidth * 6
+                        height: 2
+                        color: qgcPal.text
+                    }
+
+                    QGCLabel {
+                        id:                     deleavesAboutMenu
+                        text:                   qsTr("About")
+                        width:                  parent.width
+                        height:                 ScreenTools.defaultFontPixelHeight * 2
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pointSize:         ScreenTools.mediumFontPointSize
+                        font.family:            ScreenTools.demiboldFontFamily
+                        verticalAlignment: Text.AlignVCenter
+
+                        MouseArea {
+                            anchors.fill:   parent
+                            onClicked: {
+                                var centerX = mapToItem(toolBar, x, y).x  + (width / 2)
+                                mainWindow.showPopUp(deleavesAbout, centerX)
+                            }
+                        }
+                   }
+                }
+                Component.onCompleted: {
+                    var pos = mapFromItem(toolBar, centerX, toolBar.height)
+                    x = pos.x
+                    y = pos.y + ScreenTools.defaultFontPixelHeight
+                    buttonClicked = true
+                }
+                Component.onDestruction: {
+                    buttonClicked = false
+                }
+            }
+        }
     }
+
 
     Image {
         anchors.right:          parent.right
