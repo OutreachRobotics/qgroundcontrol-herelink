@@ -1531,7 +1531,7 @@ void Vehicle::_handleSysStatus(mavlink_message_t& message)
     if (sysStatus.battery_remaining > 0) {
         if (sysStatus.battery_remaining < _settingsManager->appSettings()->batteryPercentRemainingAnnounce()->rawValue().toInt() &&
                 sysStatus.battery_remaining < _lastAnnouncedLowBatteryPercent) {
-            _say(QString(tr("%1 low battery: %2 percent remaining")).arg(_vehicleIdSpeech()).arg(sysStatus.battery_remaining));
+//            _say(QString(tr("%1 low battery: %2 percent remaining")).arg(_vehicleIdSpeech()).arg(sysStatus.battery_remaining));
         }
         _lastAnnouncedLowBatteryPercent = sysStatus.battery_remaining;
     }
