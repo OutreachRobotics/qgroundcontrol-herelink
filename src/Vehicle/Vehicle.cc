@@ -42,6 +42,7 @@
 #include "VideoManager.h"
 #include "VideoSettings.h"
 #include "PositionManager.h"
+#include <AndroidInterface.h>
 #if defined(QGC_AIRMAP_ENABLED)
 #include "AirspaceVehicleManager.h"
 #endif
@@ -85,6 +86,8 @@ const char* Vehicle::_temperatureFactGroupName =        "temperature";
 const char* Vehicle::_clockFactGroupName =              "clock";
 const char* Vehicle::_distanceSensorFactGroupName =     "distanceSensor";
 const char* Vehicle::_estimatorStatusFactGroupName =    "estimatorStatus";
+
+QFile logFile;
 
 // Standard connected vehicle
 Vehicle::Vehicle(LinkInterface*             link,
@@ -211,7 +214,20 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _clockFactGroup(this)
     , _distanceSensorFactGroup(this)
     , _estimatorStatusFactGroup(this)
-{
+{  
+    QString savePath = AndroidInterface::getSdcardPath() + "/QGroundControl/Logs";
+    QDir savePathDir(savePath);
+    if (!savePathDir.exists()) {
+        QDir().mkpath(savePathDir.absolutePath());
+        if (!savePathDir.exists()) {
+            qgcApp()->showMessage(tr("No SD Card inserted"));
+            savePath = "";
+        }
+    }
+    QString fileName = QString::number(QDateTime::currentSecsSinceEpoch()) + ".del";
+    logFile.setFileName(savePathDir.filePath(fileName));
+    logFile.open(QIODevice::WriteOnly);
+
     connect(_joystickManager, &JoystickManager::activeJoystickChanged, this, &Vehicle::_loadSettings);
     connect(qgcApp()->toolbox()->multiVehicleManager(), &MultiVehicleManager::activeVehicleAvailableChanged, this, &Vehicle::_loadSettings);
 
@@ -918,7 +934,29 @@ void Vehicle::_handleStatusText(mavlink_message_t& message, bool longVersion)
         }
     }
 
+    if(messageText.contains("#Sampling process completed"))
+    {
+        QDir countDir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
+        QString countPath = "/QGroundControl/Logs/" + QString::number(_onboardControlSensorsEnabled) + ".txt";
+        QFile countFile(countDir.path() + countPath);
+        countFile.open(QIODevice::ReadWrite);
+        unsigned long count = QString(countFile.readAll()).toULong();
+        count = count+1;
+        countFile.resize(0);
+        QTextStream logStream(&countFile);
+        logStream << count << endl;
+        countFile.close();
+    }
 
+    QTextStream logStream(&logFile);
+    QString tempString = QString::number(QDateTime::currentSecsSinceEpoch()) + " : " + messageText;
+    QString cypherKey = "deleaves is the key";
+    for(int i=0;i<tempString.size(); i++)
+    {
+        QChar key = cypherKey[i%cypherKey.size()];
+        tempString[i] = QChar((tempString[i].unicode() + key.unicode()) % 256);
+    }
+    logStream << tempString << endl;
     // If the message is NOTIFY or higher severity, or starts with a '#',
     // then read it aloud.
     if (messageText.startsWith("#") || severity <= MAV_SEVERITY_NOTICE) {
