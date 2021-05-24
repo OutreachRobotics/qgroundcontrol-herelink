@@ -124,6 +124,19 @@ Item {
             color:                  getBatteryColor()
             anchors.verticalCenter: parent.verticalCenter
         }
+        Rectangle {
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 15
+            color: qgcPal.text
+            opacity: 0
+        }
+        Rectangle {
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 1
+            color: qgcPal.text
+        }
     }
     MouseArea {
         anchors.fill:   parent

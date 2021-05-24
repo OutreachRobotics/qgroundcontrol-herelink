@@ -212,29 +212,69 @@ QGCView {
 
     }
 
+//    Item {
+
+//        z: 100
+//        anchors.verticalCenter : parent.verticalCenter
+//        width:  200
+//        height: 200
+//        visible: false
+
+//        Image {
+//            id: angleArrow
+//            source: "/qmlimages/compassInstrumentArrow.svg"
+//            anchors.fill: parent
+//            fillMode: Image.PreserveAspectFit
+//            visible: isArrowVisible && getArrowVisibility()
+//            rotation:getArrowOrientation()
+//        }
+
+//        Timer {
+//                interval: 300; running: true; repeat: true
+//                onTriggered: {
+//                    isArrowVisible = !isArrowVisible
+//                }
+//        }
+//    }
+
+    property real   _maxMambaAngle:        25
     Item {
+        id: workspace
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        width: 300
+        height: 300
+        z: 50
 
-        z: 100
-        anchors.verticalCenter : parent.verticalCenter
-        width:  200
-        height: 200
-
-        Image {
-            id: angleArrow
-            source: "/qmlimages/compassInstrumentArrow.svg"
+        Rectangle {
             anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
-            visible: isArrowVisible && getArrowVisibility()
-            rotation:getArrowOrientation()
+            color: "white"
+            border.color:   qgcPal.text
+            opacity: 0.5
+            radius: width*0.2
+
+//            Label {
+//                text: "Height: " + workspace.height/2 + "\r\nPitch: " + _activeVehicle.pitch.value + "\r\nMax Angle: " + _maxMambaAngle
+//                font.pixelSize: 22
+//                color: "red"
+//                anchors.verticalCenter: parent.verticalCenter
+//                anchors.horizontalCenter: parent.horizontalCenter
+//            }
+
+            Rectangle {
+                color: "black"
+                width:30
+                height: 30
+                radius: width*0.5
+                opacity: _activeVehicle? 1.0 : 0.0
+                x: Math.min(Math.max(workspace.width/2-width/2 + _activeVehicle.roll.value/_maxMambaAngle*workspace.width/2, -width/2),workspace.width-width/2)
+                y: Math.min(Math.max(workspace.height/2-height/2 + _activeVehicle.pitch.value/_maxMambaAngle*workspace.height/2, -height/2),workspace.height-height/2)
+                z: 100
+            }
         }
 
-        Timer {
-                interval: 300; running: true; repeat: true
-                onTriggered: {
-                    isArrowVisible = !isArrowVisible
-                }
-        }
     }
+
 
 //    property var    _videoReceiver:         QGroundControl.videoManager.videoReceiver
 //    property bool   _recordingVideo:        _videoReceiver && _videoReceiver.recording

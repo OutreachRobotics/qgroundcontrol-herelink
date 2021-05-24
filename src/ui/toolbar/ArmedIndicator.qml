@@ -19,21 +19,35 @@ import QGroundControl.Palette               1.0
 
 //-------------------------------------------------------------------------
 //-- Armed Indicator
-QGCLabel {
-    anchors.top:        parent.top
-    anchors.bottom:     parent.bottom
-    verticalAlignment:  Text.AlignVCenter
-    text:               _armed ? qsTr("Armed") : qsTr("Disarmed")
-    font.pointSize:     ScreenTools.mediumFontPointSize
-    color:              qgcPal.buttonText
+//Row {
+//    id:             armIndicatorRow
+//    anchors.top:    parent.top
+//    anchors.bottom: parent.bottom
 
-    property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
-    property bool   _armed:         _activeVehicle ? _activeVehicle.armed : false
-
-    QGCPalette { id: qgcPal }
-
-//    QGCMouseArea {
-//        fillItem: parent
-//        onClicked: _armed ? toolBar.disarmVehicle() : toolBar.armVehicle()
+//    Rectangle {
+//        width: ScreenTools.defaultFontPixelWidth
+//        height: 10
+//        anchors.verticalCenter: parent.verticalCenter
+//        color: "white"
+//        opacity: 0
 //    }
-}
+
+    QGCLabel {
+        anchors.top:        parent.top
+        anchors.bottom:     parent.bottom
+        verticalAlignment:  Text.AlignVCenter
+        text:               _armed ? qsTr("Armed") : qsTr("Disarmed")
+        font.pointSize:     ScreenTools.mediumFontPointSize
+        color:              qgcPal.buttonText
+
+        property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+        property bool   _armed:         _activeVehicle ? _activeVehicle.armed : false
+
+        QGCPalette { id: qgcPal }
+
+        QGCMouseArea {
+            fillItem: parent
+            onClicked: _armed ? toolBar.disarmVehicle() : toolBar.armVehicle()
+        }
+    }
+//}

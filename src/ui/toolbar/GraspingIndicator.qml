@@ -36,14 +36,28 @@ Item {
         anchors.top:    parent.top
         anchors.bottom: parent.bottom
 
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
+        Rectangle {
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 1
+            color: qgcPal.text
+        }
+
         Gauge {
             id: graspingGauge
             anchors.verticalCenter: parent.verticalCenter
-            implicitWidth:          300
+            implicitWidth:          250
             implicitHeight:         50
             minimumValue:           0
             maximumValue:           100
-            value:                  _activeVehicle.roll.value
+            value:                  _activeVehicle.sensorsPresentBits
             tickmarkStepSize:       100
             minorTickmarkCount:     0
             orientation:            Qt.Horizontal
@@ -69,10 +83,30 @@ Item {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               Math.floor(_activeVehicle.roll.value) + "%"
+            text:               Math.floor(_activeVehicle.sensorsPresentBits) + "%"
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
         }
+
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
+
+        QGCLabel {
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            verticalAlignment:  Text.AlignVCenter
+            text:               _activeVehicle.sensorsEnabledBits ? qsTr("On") : qsTr("Off")
+            font.pointSize:     ScreenTools.mediumFontPointSize
+            color:              qgcPal.buttonText
+            QGCPalette { id: qgcPal }
+
+            }
+
 
     }
 

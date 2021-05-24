@@ -110,8 +110,8 @@ Rectangle {
                 anchors.bottom:     parent.bottom
                 exclusiveGroup:     mainActionGroup
                 source:             "/qmlimages/Gears.svg"
+//                color:              "#F26E1A"
                 onClicked:          toolBar.showSetupView()
-                visible:            false
             }
 
             QGCToolBarButton {
@@ -130,8 +130,8 @@ Rectangle {
                 anchors.bottom:     parent.bottom
                 exclusiveGroup:     mainActionGroup
                 source:             "/qmlimages/deleaves.svg"
+//                color:              "#F26E1A"
                 onClicked:          toolBar.showFlyView()
-                visible:            false
             }
 
             QGCToolBarButton {
@@ -231,7 +231,7 @@ Rectangle {
         anchors.right:  parent.right
         height:         parent.height
         color:          qgcPal.window
-        visible:        false
+        visible:        _showLargeProgress
 
         property bool _initialDownloadComplete: _activeVehicle ? _activeVehicle.parameterManager.parametersReady : true
         property bool _userHide:                false

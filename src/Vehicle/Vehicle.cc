@@ -2963,7 +2963,7 @@ QString Vehicle::_vehicleIdSpeech(void)
 
 void Vehicle::_handleFlightModeChanged(const QString& flightMode)
 {
-    _say(QString("%1 %2").arg(_vehicleIdSpeech()).arg(QString(tr("DeLeaves sampling tool connected"))));
+    _say(QString(tr("%1 %2 flight mode")).arg(_vehicleIdSpeech()).arg(flightMode));
 }
 
 void Vehicle::_announceArmedChanged(bool armed)

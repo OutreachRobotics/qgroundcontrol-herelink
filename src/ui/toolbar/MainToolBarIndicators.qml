@@ -80,6 +80,7 @@ Item {
                 sourceSize.width:       width
                 source:                 "/qmlimages/deleavesLogo2.png"
                 fillMode:               Image.PreserveAspectFit
+                visible: false
             }
 
             Rectangle {
@@ -88,6 +89,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 color: "white"
                 opacity: 0
+                visible: false
             }
 
             Rectangle {
@@ -95,6 +97,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 height:                 100
                 width:                  100
+                visible: false
 
                 QGCColoredImage {
                     id:                     hamburgerIcon
@@ -121,6 +124,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 color: "white"
                 opacity: 0
+                visible: false
             }
 
             Rectangle {
@@ -142,7 +146,7 @@ Item {
                 id:                     waitForVehicle
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 4
-                text:                   qsTr("Waiting For DeLeaves Sampling Tool Connection")
+                text:                   qsTr("Waiting For Mamba Connection")
                 font.pointSize:         ScreenTools.mediumFontPointSize
                 font.family:            ScreenTools.demiboldFontFamily
                 color:                  qgcPal.colorRed
@@ -353,7 +357,7 @@ Item {
         anchors.right:          parent.right
         anchors.top:            parent.top
         anchors.bottom:         parent.bottom
-        visible:                x > indicatorRow.width && !_communicationLost
+        visible:                false
         fillMode:               Image.PreserveAspectFit
         source:                 _outdoorPalette ? _brandImageOutdoor : _brandImageIndoor
         mipmap:                 true
