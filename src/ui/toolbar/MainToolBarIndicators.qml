@@ -203,7 +203,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: "HX4060751100044"
+                            text: "HX4060751300310"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {

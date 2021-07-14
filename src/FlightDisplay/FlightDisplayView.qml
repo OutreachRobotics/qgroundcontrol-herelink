@@ -237,13 +237,15 @@ QGCView {
 //        }
 //    }
 
-    property real   _maxMambaAngle:        25
+    property real   _maxPitchAngle:       17.5
+    property real   _maxRollAngle:        11.3
     Item {
         id: workspace
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        width: 300
+        anchors.margins: 10
         height: 300
+        width: 200
         z: 50
 
         Rectangle {
@@ -267,12 +269,11 @@ QGCView {
                 height: 30
                 radius: width*0.5
                 opacity: _activeVehicle? 1.0 : 0.0
-                x: Math.min(Math.max(workspace.width/2-width/2 + _activeVehicle.roll.value/_maxMambaAngle*workspace.width/2, -width/2),workspace.width-width/2)
-                y: Math.min(Math.max(workspace.height/2-height/2 + _activeVehicle.pitch.value/_maxMambaAngle*workspace.height/2, -height/2),workspace.height-height/2)
+                x: Math.min(Math.max(workspace.width/2-width/2 + -(_activeVehicle.roll.value)/_maxRollAngle*workspace.width/2, -width/2),workspace.width-width/2)
+                y: Math.min(Math.max(workspace.height/2-height/2 + -(_activeVehicle.pitch.value)/_maxPitchAngle*workspace.height/2, -height/2),workspace.height-height/2)
                 z: 100
             }
         }
-
     }
 
 
