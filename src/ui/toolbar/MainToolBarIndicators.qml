@@ -199,7 +199,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: "HX4060751100044"
+                            text: "HX406075130299"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
@@ -231,7 +231,7 @@ Item {
 
                     QGCLabel {
                        id:                     deleavesWebsite
-                       text:                   "www.deleaves-drone.com"
+                       text:                   "www.deleaves.com"
                        anchors.horizontalCenter: parent.horizontalCenter
                        font.pointSize:         ScreenTools.mediumFontPointSize
                        font.family:            ScreenTools.demiboldFontFamily
