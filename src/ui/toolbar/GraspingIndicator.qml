@@ -53,7 +53,7 @@ Item {
         Gauge {
             id: graspingGauge
             anchors.verticalCenter: parent.verticalCenter
-            implicitWidth:          250
+            implicitWidth:          150
             implicitHeight:         50
             minimumValue:           0
             maximumValue:           100
@@ -105,7 +105,24 @@ Item {
             color:              qgcPal.buttonText
             QGCPalette { id: qgcPal }
 
-            }
+        }
+
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth*2
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
+
+        QGCLabel {
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            verticalAlignment:  Text.AlignVCenter
+            text:               _activeVehicle.sensorsHealthBits ? qsTr("T") : qsTr("")
+            font.pointSize:     ScreenTools.mediumFontPointSize
+            color:              qgcPal.buttonText
+        }
 
 
     }

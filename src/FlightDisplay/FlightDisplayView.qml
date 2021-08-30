@@ -212,31 +212,6 @@ QGCView {
 
     }
 
-//    Item {
-
-//        z: 100
-//        anchors.verticalCenter : parent.verticalCenter
-//        width:  200
-//        height: 200
-//        visible: false
-
-//        Image {
-//            id: angleArrow
-//            source: "/qmlimages/compassInstrumentArrow.svg"
-//            anchors.fill: parent
-//            fillMode: Image.PreserveAspectFit
-//            visible: isArrowVisible && getArrowVisibility()
-//            rotation:getArrowOrientation()
-//        }
-
-//        Timer {
-//                interval: 300; running: true; repeat: true
-//                onTriggered: {
-//                    isArrowVisible = !isArrowVisible
-//                }
-//        }
-//    }
-
     property real   _maxPitchAngle:       17.5
     property real   _maxRollAngle:        11.3
     Item {
@@ -255,14 +230,6 @@ QGCView {
             opacity: 0.5
             radius: width*0.2
 
-//            Label {
-//                text: "Height: " + workspace.height/2 + "\r\nPitch: " + _activeVehicle.pitch.value + "\r\nMax Angle: " + _maxMambaAngle
-//                font.pixelSize: 22
-//                color: "red"
-//                anchors.verticalCenter: parent.verticalCenter
-//                anchors.horizontalCenter: parent.horizontalCenter
-//            }
-
             Rectangle {
                 color: "black"
                 width:30
@@ -275,6 +242,34 @@ QGCView {
             }
         }
     }
+    Item{
+        id: compass
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 10
+        height: 300
+        width: 300
+        z: 50
+
+        Rectangle {
+            anchors.fill: parent
+            color: "white"
+            border.color:   qgcPal.text
+            opacity: 0.5
+            radius: width*0.55
+
+            QGCCompassWidget {
+                id:                         compass_widget
+                anchors.horizontalCenter:   parent.horizontalCenter
+                anchors.verticalCenter:     parent.verticalCenter
+                size:                       parent.width * 0.95
+                vehicle:                    _activeVehicle
+                z: 100
+            }
+        }
+    }
+
+
 
 
 //    property var    _videoReceiver:         QGroundControl.videoManager.videoReceiver

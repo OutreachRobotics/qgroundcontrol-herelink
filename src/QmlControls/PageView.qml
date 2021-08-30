@@ -8,6 +8,7 @@ import QGroundControl.ScreenTools   1.0
 
 Rectangle {
     id:     _root
+    visible: false
     height: pageFlickable.y + pageFlickable.height + _margins
     color:  qgcPal.window
     radius: ScreenTools.defaultFontPixelWidth * 0.5

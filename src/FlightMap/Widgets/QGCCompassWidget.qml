@@ -49,7 +49,7 @@ Item {
     Item {
         id:             instrument
         anchors.fill:   parent
-        visible:        false
+        visible:        true
 
         Image {
             id:                 pointer
