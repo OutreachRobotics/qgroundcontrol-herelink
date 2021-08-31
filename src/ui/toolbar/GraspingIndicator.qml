@@ -115,13 +115,25 @@ Item {
             opacity: 0
         }
 
-        QGCLabel {
+//        QGCLabel {
+//            anchors.top:        parent.top
+//            anchors.bottom:     parent.bottom
+//            verticalAlignment:  Text.AlignVCenter
+//            text:               _activeVehicle.sensorsHealthBits ? qsTr("T") : qsTr("")
+//            font.pointSize:     ScreenTools.mediumFontPointSize
+//            color:              qgcPal.buttonText
+//        }
+
+        QGCColoredImage {
+            id:                 taxiIcon
+            width:              height
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
-            verticalAlignment:  Text.AlignVCenter
-            text:               _activeVehicle.sensorsHealthBits ? qsTr("T") : qsTr("")
-            font.pointSize:     ScreenTools.mediumFontPointSize
-            color:              qgcPal.buttonText
+            source:             "/qmlimages/taxi.svg"
+            fillMode:           Image.PreserveAspectFit
+            sourceSize.height:  height
+            color: "black"
+            visible:            _activeVehicle.sensorsHealthBits ? true : false
         }
 
 
