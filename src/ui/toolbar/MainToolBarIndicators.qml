@@ -75,8 +75,8 @@ Item {
             Image {
                 id:                     deleavesIcon
                 anchors.verticalCenter: parent.verticalCenter
-                height:                 120
-                width:                  120
+                height:                 100
+                width:                  100
                 sourceSize.width:       width
                 source:                 "/qmlimages/deleavesLogo2.png"
                 fillMode:               Image.PreserveAspectFit
@@ -199,7 +199,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: "HX406075130299"
+                            text: "HX4060751300267"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
