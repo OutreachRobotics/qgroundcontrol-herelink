@@ -391,6 +391,7 @@ Item {
         layoutDirection:    Qt.RightToLeft
         spacing:            ScreenTools.defaultFontPixelWidth
         visible:            _communicationLost
+        onVisibleChanged:   _activeVehicle.disconnectInactiveVehicle()
 
         QGCButton {
             id:                     disconnectButton

@@ -33,7 +33,7 @@ Item {
     property real _defaultSize: ScreenTools.defaultFontPixelHeight * (10)
     property real _sizeRatio:   ScreenTools.isTinyScreen ? (size / _defaultSize) * 0.5 : size / _defaultSize
     property int  _fontSize:    ScreenTools.defaultFontPointSize * _sizeRatio
-    property real _heading:     vehicle ? vehicle.heading.rawValue : 0
+    property real _heading:     vehicle ? vehicle.heading.rawValue - 15 : 0
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
 
