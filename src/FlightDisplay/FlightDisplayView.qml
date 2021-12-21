@@ -224,7 +224,7 @@ QGCView {
             source: "/qmlimages/compassInstrumentArrow.svg"
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
-            visible: isArrowVisible && getArrowVisibility()
+            visible: false
             rotation:getArrowOrientation()
         }
 
