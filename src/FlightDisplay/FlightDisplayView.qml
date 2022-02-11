@@ -242,34 +242,98 @@ QGCView {
             }
         }
     }
+
+
     Item{
-        id: compass
+        id: camera_downward
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 10
-        height: 300
-        width: 300
+        height: 250
+        width: height
         z: 50
+        visible: _activeVehicle? true : false
+
 
         Rectangle {
+            id: bottomSensorRect
             anchors.fill: parent
             color: "white"
             border.color:   qgcPal.text
             opacity: 0.5
-            radius: width*0.55
+            radius: width*0.2
 
-            QGCCompassWidget {
-                id:                         compass_widget
-                anchors.horizontalCenter:   parent.horizontalCenter
-                anchors.verticalCenter:     parent.verticalCenter
-                size:                       parent.width * 0.95
-                vehicle:                    _activeVehicle
-                z: 100
+            Row {
+                id: bottomSensorCol
+                anchors.bottom: parent.bottom
+                height: parent.height/2.5
+
+                QGCColoredImage {
+                    anchors.top:                parent.top
+                    anchors.bottom:             parent.bottom
+                    anchors.left:               bottomSensorRect.left
+                    width:                      height
+                    sourceSize.width:           width
+                    source:                     "/qmlimages/bottom_sensor.svg"
+                    fillMode:                   Image.PreserveAspectFit
+                    color:                      "black"
+    //                opacity:                    0.5
+                    rotation:                   180
+                }
+                Label {
+                    anchors.top:        parent.top
+                    anchors.bottom:     parent.bottom
+                    anchors.right:      bottomSensorRect.right
+                    verticalAlignment:  Text.AlignVCenter
+                    text:               "0.87" + " m"
+    //                    text:               _activeVehicle.
+                    font.pointSize:     ScreenTools.mediumFontPointSize
+                    color:              "black"
+                }
+            }
+            QGCColoredImage {
+                anchors.top:                parent.top
+                anchors.bottom:             bottomSensorCol.top
+                anchors.left:               parent.left
+                anchors.right:              parent.right
+                width:                      height*1.4
+                sourceSize.width:           width
+                source:                     "/qmlimages/sony_camera.svg"
+                fillMode:                   Image.PreserveAspectFit
+                color:                      "black"
+    //            opacity:                    0.5
+                rotation:                   180 - (0)
             }
         }
     }
 
 
+//    Item{
+//        id: compass
+//        anchors.right: parent.right
+//        anchors.bottom: parent.bottom
+//        anchors.margins: 10
+//        height: 300
+//        width: 300
+//        z: 50
+
+//        Rectangle {
+//            anchors.fill: parent
+//            color: "white"
+//            border.color:   qgcPal.text
+//            opacity: 0.5
+//            radius: width*0.55
+
+//            QGCCompassWidget {
+//                id:                         compass_widget
+//                anchors.horizontalCenter:   parent.horizontalCenter
+//                anchors.verticalCenter:     parent.verticalCenter
+//                size:                       parent.width * 0.95
+//                vehicle:                    _activeVehicle
+//                z: 100
+//            }
+//        }
+//    }
 
 
 //    property var    _videoReceiver:         QGroundControl.videoManager.videoReceiver

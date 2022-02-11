@@ -16,6 +16,7 @@
         <file alias="LinkIndicator.qml">src/ui/toolbar/LinkIndicator.qml</file>
         <file alias="GraspingIndicator.qml">src/ui/toolbar/GraspingIndicator.qml</file>
         <file alias="DeLeavesLogo.qml">src/ui/toolbar/DeLeavesLogo.qml</file>
+        <file alias="LengthIndicator.qml">src/ui/toolbar/LengthIndicator.qml</file>
     </qresource>
     <qresource prefix="/qml">
         <file alias="CorridorScanEditor.qml">src/PlanView/CorridorScanEditor.qml</file>

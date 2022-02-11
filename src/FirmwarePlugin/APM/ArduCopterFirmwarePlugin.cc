@@ -25,7 +25,7 @@ APMCopterMode::APMCopterMode(uint32_t mode, bool settable) :
     QMap<uint32_t,QString> enumToString;
     enumToString.insert(STABILIZE, "Stabilize");
     enumToString.insert(ACRO,      "Acro");
-    enumToString.insert(ALT_HOLD,  "Altitude Hold");
+    enumToString.insert(ALT_HOLD,  "Attitude Hold");
     enumToString.insert(AUTO,      "Auto");
     enumToString.insert(GUIDED,    "Guided");
     enumToString.insert(LOITER,    "Loiter");

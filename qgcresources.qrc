@@ -188,6 +188,9 @@
         <file alias="deleavesLogo.png">src/ui/toolbar/Images/deleaves_logo.png</file>
         <file alias="deleavesLogo2.png">src/ui/toolbar/Images/deleaves_logo2.png</file>
         <file alias="taxi.svg">src/ui/toolbar/Images/Taxi.svg</file>
+        <file alias="bottom_sensor.svg">src/ui/toolbar/Images/bottom_sensor.svg</file>
+        <file alias="sony_camera.svg">src/ui/toolbar/Images/camera.svg</file>
+        <file alias="length.svg">src/ui/toolbar/Images/length.svg</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="action.svg">resources/action.svg</file>
