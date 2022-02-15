@@ -1041,6 +1041,7 @@ void Vehicle::_handleDistanceSensor(mavlink_message_t& message)
     mavlink_distance_sensor_t distanceSensor;
 
     mavlink_msg_distance_sensor_decode(&message, &distanceSensor);\
+    _telemetryRXErrors = distanceSensor.current_distance;
 
     if (!_distanceSensorFactGroup.idSet()) {
         _distanceSensorFactGroup.setIdSet(true);
@@ -1783,10 +1784,10 @@ void Vehicle::_handleRadioStatus(mavlink_message_t& message)
         _telemetryRRSSI = remrssi;
         emit telemetryRRSSIChanged(_telemetryRRSSI);
     }
-    if(_telemetryRXErrors != rstatus.rxerrors) {
-        _telemetryRXErrors = rstatus.rxerrors;
-        emit telemetryRXErrorsChanged(_telemetryRXErrors);
-    }
+//    if(_telemetryRXErrors != rstatus.rxerrors) {
+//        _telemetryRXErrors = rstatus.rxerrors;
+//        emit telemetryRXErrorsChanged(_telemetryRXErrors);
+//    }
     if(_telemetryFixed != rstatus.fixed) {
         _telemetryFixed = rstatus.fixed;
         emit telemetryFixedChanged(_telemetryFixed);

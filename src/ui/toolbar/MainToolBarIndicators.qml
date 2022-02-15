@@ -146,7 +146,7 @@ Item {
                 id:                     waitForVehicle
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 4
-                text:                   qsTr("Waiting For Mamba Connection")
+                text:                   qsTr("Waiting For SIMBA Connection")
                 font.pointSize:         ScreenTools.mediumFontPointSize
                 font.family:            ScreenTools.demiboldFontFamily
                 color:                  qgcPal.colorRed

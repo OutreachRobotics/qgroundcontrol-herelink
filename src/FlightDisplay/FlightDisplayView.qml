@@ -285,10 +285,9 @@ QGCView {
                     anchors.bottom:     parent.bottom
                     anchors.right:      bottomSensorRect.right
                     verticalAlignment:  Text.AlignVCenter
-                    text:               "0.87" + " m"
-    //                    text:               _activeVehicle.
+                    text:               _activeVehicle.sensorsHealthBits>0?(_activeVehicle.sensorsHealthBits/100).toFixed(2):"<0.50" + " m"
                     font.pointSize:     ScreenTools.mediumFontPointSize
-                    color:              "black"
+                    color:              _activeVehicle.sensorsHealthBits>0?"black":"red"
                 }
             }
             QGCColoredImage {
@@ -302,7 +301,7 @@ QGCView {
                 fillMode:                   Image.PreserveAspectFit
                 color:                      "black"
     //            opacity:                    0.5
-                rotation:                   180 - (0)
+                rotation:                   180 - (_activeVehicle.sensorsPresentBits-90)
             }
         }
     }
