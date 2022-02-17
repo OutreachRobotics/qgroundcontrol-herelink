@@ -74,6 +74,26 @@ Item {
             color:              qgcPal.buttonText
         }
 
+        QGCLabel {
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            verticalAlignment:  Text.AlignVCenter
+            text:               "a"
+            font.pointSize:     ScreenTools.mediumFontPointSize
+            color:              "transparent"
+        }
+
+        QGCColoredImage {
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            width:              height
+            sourceSize.height:  height
+            source:             "/qmlimages/pendulum.png"
+            fillMode:           Image.PreserveAspectFit
+            color:              qgcPal.buttonText
+            visible:            _activeVehicle.pitch.value>0.5?true:false
+        }
+
     }
 
 
