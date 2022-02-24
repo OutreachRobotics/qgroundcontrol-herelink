@@ -285,9 +285,9 @@ QGCView {
                     anchors.bottom:     parent.bottom
                     anchors.right:      bottomSensorRect.right
                     verticalAlignment:  Text.AlignVCenter
-                    text:               _activeVehicle.sensorsHealthBits>0?(_activeVehicle.sensorsHealthBits/100).toFixed(2):"<0.50" + " m"
+                    text:               (_activeVehicle.sensorsHealthBits-30)>20?((_activeVehicle.sensorsHealthBits-30)/100).toFixed(2):"<0.20" + " m"
                     font.pointSize:     ScreenTools.mediumFontPointSize
-                    color:              _activeVehicle.sensorsHealthBits>0?"black":"red"
+                    color:              (_activeVehicle.sensorsHealthBits-30)>100?"black":"red"
                 }
             }
             QGCColoredImage {
