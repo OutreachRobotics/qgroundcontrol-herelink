@@ -29,6 +29,20 @@ Item {
     width:          lengthRow.width
 
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+    property double _atitude_offset: 0.0
+
+    Component {
+        id: lengthReset
+
+        Rectangle {
+            width:  lengthRow.width
+            height: lengthRow.height
+            color:  qgcPal.window
+            border.color:   qgcPal.text
+
+
+        }
+    }
 
 
     Row {
@@ -65,10 +79,14 @@ Item {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               "0.98" + " m"
+            text:               _activeVehicle.altitudeRelative + " m"
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
         }
 
+    }
+    MouseArea {
+        anchors.fill:   parent
+        onClicked:      mainWindow.showPopUp(lengthReset, mapToItem(toolBar, x, y).x + (width / 2))
     }
 }
