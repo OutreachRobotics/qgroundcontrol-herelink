@@ -24,26 +24,12 @@ import QGroundControl.Palette               1.0
 Item {
     id: lengthItem
     anchors.top:    parent.top
-    anchors.bottom:    parent.bottom
+    anchors.bottom: parent.bottom
     visible:        true
     width:          lengthRow.width
 
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
     property double _atitude_offset: 0.0
-
-    Component {
-        id: lengthReset
-
-        Rectangle {
-            width:  lengthRow.width
-            height: lengthRow.height
-            color:  qgcPal.window
-            border.color:   qgcPal.text
-
-
-        }
-    }
-
 
     Row {
         id:             lengthRow
@@ -79,14 +65,15 @@ Item {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               _activeVehicle.altitudeRelative + " m"
+            text:               (-_activeVehicle.altitudeRelative.value + _atitude_offset).toFixed(2) + " m"
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
         }
 
     }
     MouseArea {
-        anchors.fill:   parent
-        onClicked:      mainWindow.showPopUp(lengthReset, mapToItem(toolBar, x, y).x + (width / 2))
+        anchors.fill:   lengthRow
+        onDoubleClicked:      _atitude_offset=_activeVehicle.altitudeRelative.value
     }
+
 }
