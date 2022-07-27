@@ -30,6 +30,13 @@ Item {
 
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
 
+    function getAngleValue() {
+        return Math.atan2(_activeVehicle.sensorsPresentBits-_activeVehicle.sensorsEnabledBits,27.5)
+    }
+
+    function getDistanceValue(){
+        return (_activeVehicle.sensorsPresentBits*Math.cos(getAngleValue()) + _activeVehicle.sensorsEnabledBits*Math.cos(getAngleValue())) / 2 - 22
+    }
 
     Row {
         id:             graspingRow
@@ -50,42 +57,23 @@ Item {
             color: qgcPal.text
         }
 
-        Gauge {
-            id: graspingGauge
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
             anchors.verticalCenter: parent.verticalCenter
-            implicitWidth:          150
-            implicitHeight:         50
-            minimumValue:           0
-            maximumValue:           100
-            value:                  _activeVehicle.sensorsPresentBits
-            tickmarkStepSize:       100
-            minorTickmarkCount:     0
-            orientation:            Qt.Horizontal
-            style: GaugeStyle {
-                tickmark: Item {
-                    visible: false
-                }
-                tickmarkLabel: Item {
-                    visible: false
-                }
-                background: Rectangle {
-                    color: "white"
-                    border.color: "black"
-                }
-                valueBar: Rectangle {
-                    color: "#F26E1C"
-                    implicitWidth: 45
-                }
-            }
+            color: "white"
+            opacity: 0
         }
 
-        QGCLabel {
+        QGCColoredImage {
+            id:                 distIcon
+            width:              height
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
-            verticalAlignment:  Text.AlignVCenter
-            text:               Math.floor(_activeVehicle.sensorsPresentBits) + "%"
-            font.pointSize:     ScreenTools.mediumFontPointSize
-            color:              qgcPal.buttonText
+            source:             "/qmlimages/distance.png"
+            fillMode:           Image.PreserveAspectFit
+            sourceSize.height:  height
+            color:              "black"
         }
 
         Rectangle {
@@ -100,10 +88,62 @@ Item {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               _activeVehicle.sensorsEnabledBits ? qsTr("On") : qsTr("Off")
+            text:               Math.floor(getDistanceValue())>300 ? "300" : Math.floor(getDistanceValue())<0?0:Math.floor(getDistanceValue()) + "cm"
+            font.pointSize:     ScreenTools.mediumFontPointSize
+            color:              qgcPal.buttonText
+            opacity:            Math.floor(getDistanceValue())>300 ? 0.5 : 1
+        }
+
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
+        Rectangle {
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 1
+            color: qgcPal.text
+        }
+
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
+
+        QGCColoredImage {
+            id:                 angleIcon
+            width:              height
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            source:             "/qmlimages/angle.png"
+            fillMode:           Image.PreserveAspectFit
+            sourceSize.height:  height
+            color:              "black"
+        }
+
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
+
+        QGCLabel {
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            verticalAlignment:  Text.AlignVCenter
+            text:               Math.floor(getAngleValue()*180/3.1416) + "°"
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
             QGCPalette { id: qgcPal }
+            opacity:            Math.floor(getDistanceValue())>300 ? 0.5 : 1
 
         }
 
@@ -114,15 +154,6 @@ Item {
             color: "white"
             opacity: 0
         }
-
-//        QGCLabel {
-//            anchors.top:        parent.top
-//            anchors.bottom:     parent.bottom
-//            verticalAlignment:  Text.AlignVCenter
-//            text:               _activeVehicle.sensorsHealthBits ? qsTr("T") : qsTr("")
-//            font.pointSize:     ScreenTools.mediumFontPointSize
-//            color:              qgcPal.buttonText
-//        }
 
         QGCColoredImage {
             id:                 taxiIcon

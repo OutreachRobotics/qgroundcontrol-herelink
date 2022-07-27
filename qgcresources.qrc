@@ -188,6 +188,8 @@
         <file alias="deleavesLogo.png">src/ui/toolbar/Images/deleaves_logo.png</file>
         <file alias="deleavesLogo2.png">src/ui/toolbar/Images/deleaves_logo2.png</file>
         <file alias="taxi.svg">src/ui/toolbar/Images/Taxi.svg</file>
+        <file alias="angle.png">src/ui/toolbar/Images/Angle.png</file>
+        <file alias="distance.png">src/ui/toolbar/Images/Distance.png</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="action.svg">resources/action.svg</file>
