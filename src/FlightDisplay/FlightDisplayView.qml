@@ -12,6 +12,10 @@ import QtQuick                  2.3
 import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 import QtQuick.Dialogs          1.2
+import QtQuick.Layouts  1.2
+import QtQuick.Extras 1.4
+import QtQuick.Extras.Private 1.0
+
 import QtLocation               5.3
 import QtPositioning            5.3
 import QtQuick.Layouts          1.2
@@ -108,6 +112,10 @@ QGCView {
             }
         }
         return true;
+    }
+
+    function getAngleValue() {
+        return -Math.atan2(_activeVehicle.sensorsPresentBits-_activeVehicle.sensorsEnabledBits,27.5)
     }
 
     PlanMasterController {
@@ -242,11 +250,13 @@ QGCView {
             }
         }
     }
+
     Item{
         id: compass
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: 10
+        anchors.rightMargin: 20
+        anchors.bottomMargin: 10
         height: 300
         width: 300
         z: 50
@@ -254,19 +264,50 @@ QGCView {
         Rectangle {
             anchors.fill: parent
             color: "white"
-            border.color:   qgcPal.text
-            opacity: 0.5
             radius: width*0.55
+            opacity: 0.5
 
-            QGCCompassWidget {
-                id:                         compass_widget
-                anchors.horizontalCenter:   parent.horizontalCenter
-                anchors.verticalCenter:     parent.verticalCenter
-                size:                       parent.width * 0.95
-                vehicle:                    _activeVehicle
-                z: 100
+
+            CircularGauge {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                height: parent.height
+                width: parent.width
+                maximumValue:       45
+                minimumValue:       -45
+                stepSize:           1
+                tickmarksVisible:   true
+                value:              Math.floor(getAngleValue()*180/3.1416)
+                style:   CircularGaugeStyle {
+                    minimumValueAngle:      -145
+                    maximumValueAngle:      145
+                    labelStepSize    :      15
+                    tickmarkStepSize :      15
+                    tickmark: Item {
+                                implicitHeight: 15; implicitWidth: 12
+                                Rectangle {
+                                    color: "black"
+                                    anchors.fill: parent; anchors.leftMargin: 3; anchors.rightMargin: 3
+                                }
+                            }
+                    minorTickmark: Item {
+                                implicitHeight: 10; implicitWidth: 8
+                                Rectangle {
+                                    color: "black"
+                                    anchors.fill: parent; anchors.leftMargin: 3; anchors.rightMargin: 3
+                                }
+                            }
+                    tickmarkLabel:
+                                Text {
+                                    font.pixelSize: Math.max(6, outerRadius * 0.2)
+                                    text: styleData.value
+                                    color: "black"
+                                    antialiasing: true
+                                }
+
+                    }
+                }
             }
-        }
     }
 
 

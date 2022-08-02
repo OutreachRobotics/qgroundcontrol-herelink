@@ -101,59 +101,59 @@ Item {
             color: "white"
             opacity: 0
         }
-        Rectangle {
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: 1
-            color: qgcPal.text
-        }
+//        Rectangle {
+//            anchors.top: parent.top
+//            anchors.bottom: parent.bottom
+//            width: 1
+//            color: qgcPal.text
+//        }
 
-        Rectangle {
-            width: ScreenTools.defaultFontPixelWidth
-            height: 10
-            anchors.verticalCenter: parent.verticalCenter
-            color: "white"
-            opacity: 0
-        }
+//        Rectangle {
+//            width: ScreenTools.defaultFontPixelWidth
+//            height: 10
+//            anchors.verticalCenter: parent.verticalCenter
+//            color: "white"
+//            opacity: 0
+//        }
 
-        QGCColoredImage {
-            id:                 angleIcon
-            width:              height
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            source:             "/qmlimages/angle.png"
-            fillMode:           Image.PreserveAspectFit
-            sourceSize.height:  height
-            color:              "black"
-        }
+//        QGCColoredImage {
+//            id:                 angleIcon
+//            width:              height
+//            anchors.top:        parent.top
+//            anchors.bottom:     parent.bottom
+//            source:             "/qmlimages/angle.png"
+//            fillMode:           Image.PreserveAspectFit
+//            sourceSize.height:  height
+//            color:              "black"
+//        }
 
-        Rectangle {
-            width: ScreenTools.defaultFontPixelWidth
-            height: 10
-            anchors.verticalCenter: parent.verticalCenter
-            color: "white"
-            opacity: 0
-        }
+//        Rectangle {
+//            width: ScreenTools.defaultFontPixelWidth
+//            height: 10
+//            anchors.verticalCenter: parent.verticalCenter
+//            color: "white"
+//            opacity: 0
+//        }
 
-        QGCLabel {
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            verticalAlignment:  Text.AlignVCenter
-            text:               Math.floor(getAngleValue()*180/3.1416) + "°"
-            font.pointSize:     ScreenTools.mediumFontPointSize
-            color:              qgcPal.buttonText
-            QGCPalette { id: qgcPal }
-            opacity:            Math.floor(getDistanceValue())>300 ? 0.5 : 1
+//        QGCLabel {
+//            anchors.top:        parent.top
+//            anchors.bottom:     parent.bottom
+//            verticalAlignment:  Text.AlignVCenter
+//            text:               Math.floor(getAngleValue()*180/3.1416) + "°"
+//            font.pointSize:     ScreenTools.mediumFontPointSize
+//            color:              qgcPal.buttonText
+//            QGCPalette { id: qgcPal }
+//            opacity:            Math.floor(getDistanceValue())>300 ? 0.5 : 1
 
-        }
+//        }
 
-        Rectangle {
-            width: ScreenTools.defaultFontPixelWidth*2
-            height: 10
-            anchors.verticalCenter: parent.verticalCenter
-            color: "white"
-            opacity: 0
-        }
+//        Rectangle {
+//            width: ScreenTools.defaultFontPixelWidth*2
+//            height: 10
+//            anchors.verticalCenter: parent.verticalCenter
+//            color: "white"
+//            opacity: 0
+//        }
 
         QGCColoredImage {
             id:                 taxiIcon
@@ -167,8 +167,13 @@ Item {
             visible:            _activeVehicle.sensorsHealthBits ? true : false
         }
 
-
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth*2
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
     }
-
 
 }
