@@ -14,7 +14,7 @@
         <file alias="TelemetryRSSIIndicator.qml">src/ui/toolbar/TelemetryRSSIIndicator.qml</file>
         <file alias="JoystickIndicator.qml">src/ui/toolbar/JoystickIndicator.qml</file>
         <file alias="LinkIndicator.qml">src/ui/toolbar/LinkIndicator.qml</file>
-        <file alias="GraspingIndicator.qml">src/ui/toolbar/GraspingIndicator.qml</file>
+        <file alias="LightingController.qml">src/ui/toolbar/LightingController.qml</file>
         <file alias="DeLeavesLogo.qml">src/ui/toolbar/DeLeavesLogo.qml</file>
         <file alias="LengthIndicator.qml">src/ui/toolbar/LengthIndicator.qml</file>
     </qresource>

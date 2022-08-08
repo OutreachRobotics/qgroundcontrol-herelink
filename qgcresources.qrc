@@ -191,6 +191,7 @@
         <file alias="bottom_sensor.svg">src/ui/toolbar/Images/bottom_sensor.svg</file>
         <file alias="sony_camera.svg">src/ui/toolbar/Images/camera.svg</file>
         <file alias="length.svg">src/ui/toolbar/Images/length.svg</file>
+        <file alias="Bulb.png">src/ui/toolbar/Images/bulb.png</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="action.svg">resources/action.svg</file>
