@@ -164,7 +164,7 @@ Item {
             id: deleavesAbout
 
             Rectangle {
-                width:  deleavesAboutColumn.width   + ScreenTools.defaultFontPixelWidth  * 3
+                width:  deleavesAboutColumn.width   + ScreenTools.defaultFontPixelWidth  * 20
                 height: deleavesAboutColumn.height  + ScreenTools.defaultFontPixelHeight * 2
                 radius: ScreenTools.defaultFontPixelHeight * 0.5
                 color:  qgcPal.window
@@ -172,18 +172,16 @@ Item {
 
                 Column {
                     id:                 deleavesAboutColumn
-                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                    spacing:            ScreenTools.defaultFontPixelHeight * 2
                     width:              deleavesGrid.width + ScreenTools.defaultFontPixelWidth  * 2
-                    height:             deleavesGrid.height + deleavesAboutLogo.height + deleavesWebsite.height + ScreenTools.defaultFontPixelHeight
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     anchors.centerIn:   parent
 
                     Image {
                         id:                     deleavesAboutLogo
-                        height:                 400
-                        width:                  400
+                        width:                  800
                         anchors.horizontalCenter: parent.horizontalCenter
-                        source:                 "/qmlimages/deleavesLogo.png"
+                        source:                 "/qmlimages/outreachLogo.png"
                         fillMode:               Image.PreserveAspectFit
                     }
 
@@ -199,7 +197,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: "HX4060751B00125"
+                            text: "HX4062112700134"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
@@ -207,7 +205,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: "1.1.0"
+                            text: "1.1.1"
                             verticalAlignment: Text.AlignVCenter
                         }
 
@@ -231,7 +229,7 @@ Item {
 
                     QGCLabel {
                        id:                     deleavesWebsite
-                       text:                   "www.deleaves.com"
+                       text:                   "www.outreachrobotics.com"
                        anchors.horizontalCenter: parent.horizontalCenter
                        font.pointSize:         ScreenTools.mediumFontPointSize
                        font.family:            ScreenTools.demiboldFontFamily
