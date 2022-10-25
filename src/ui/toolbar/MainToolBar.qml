@@ -129,7 +129,7 @@ Rectangle {
                 anchors.top:        parent.top
                 anchors.bottom:     parent.bottom
                 exclusiveGroup:     mainActionGroup
-                source:             "/qmlimages/deleaves.svg"
+                source:             "/qmlimages/logoCarreOutreach.png"
 //                color:              "#F26E1A"
                 onClicked:          toolBar.showFlyView()
             }

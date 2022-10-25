@@ -192,6 +192,9 @@
         <file alias="sony_camera.svg">src/ui/toolbar/Images/camera.svg</file>
         <file alias="length.svg">src/ui/toolbar/Images/length.svg</file>
         <file alias="Bulb.png">src/ui/toolbar/Images/bulb.png</file>
+        <file alias="outreachLogo.png">src/ui/toolbar/Images/outreachLogo.png</file>
+        <file alias="spyController.png">src/ui/toolbar/Images/spyController.png</file>
+        <file alias="logoCarreOutreach.png">src/ui/toolbar/Images/logoCarreOutreach.png</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="action.svg">resources/action.svg</file>

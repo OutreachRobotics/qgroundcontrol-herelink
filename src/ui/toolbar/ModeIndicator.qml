@@ -61,10 +61,10 @@ Item {
             }
         }
         Component.onCompleted: flightModeSelector.updateFlightModesMenu()
-        MouseArea {
-            visible:        _activeVehicle && _activeVehicle.flightModeSetAvailable
-            anchors.fill:   parent
-            onClicked:      flightModesMenu.popup()
-        }
+//        MouseArea {
+//            visible:        _activeVehicle && _activeVehicle.flightModeSetAvailable
+//            anchors.fill:   parent
+//            onClicked:      flightModesMenu.popup()
+//        }
     }
 }

@@ -307,7 +307,7 @@ QGCView {
     }
 
     property bool _lighting_visible: false
-    property int sliderWidth: 350
+    property int sliderWidth: 500
 
     //-- LightingController
     Item {
@@ -350,7 +350,8 @@ QGCView {
         anchors.verticalCenter: parent.verticalCenter
         width:  parent.width - 300
         height: 400
-        visible: _lighting_visible && _activeVehicle ? true : false
+        visible: false // change to next line to activate full LED control
+        // visible: _lighting_visible && _activeVehicle ? true : false
         z: 50
 
 
@@ -537,6 +538,166 @@ QGCView {
                         onValueChanged: _activeVehicle.sendCommand(_activeVehicle,183,false,led1Slider.value,
                                                                     led2Slider.value,led3Slider.value,led4Slider.value,led5Slider.value)
                     }
+                }
+            }
+        }
+    }
+
+    Item {
+        id: ligthingMinimalPopUp
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        width:  parent.width / 1.5
+        height: 780
+        visible: _lighting_visible && _activeVehicle ? true : false
+        z: 50
+
+
+        Rectangle {
+            anchors.fill: parent
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            radius: ScreenTools.defaultFontPixelHeight * 0.5
+            color:  qgcPal.window
+            border.color:   qgcPal.text
+            opacity: 0.75
+
+
+            Column {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                QGCLabel {
+                    text:           qsTr("LED POWER")
+                    font.family:    ScreenTools.boldFontFamily
+                    font.pointSize:         ScreenTools.largeFontPointSize
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                QGCSwitch {
+                    id:             ledSwitch
+                    enabled:        true
+                    checked:        false
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    style: SwitchStyle {
+                            groove: Rectangle {
+                                    implicitWidth: 300
+                                    implicitHeight: 60
+                                    border.width: 1
+                                    color: ledSwitch.checked ? "orange" : "#bdbebf"
+                            }
+                        }
+                    onCheckedChanged: {
+                        if(checked) {
+                            _activeVehicle.sendCommand(_activeVehicle,183,false,ambientLEDSlider.value,
+                                       ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
+                        } else {
+                            _activeVehicle.sendCommand(_activeVehicle,183,false,0,0,0,0,0)
+                        }
+                    }
+                }
+
+                Rectangle {
+                    opacity: 0
+                    height: 100
+                    width: 10
+                }
+
+                anchors.margins:    ScreenTools.defaultFontPixelHeight
+                spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                anchors.verticalCenter: parent.verticalCenter
+                QGCLabel {
+                    text:           qsTr("LED INTENSITY")
+                    font.family:    ScreenTools.boldFontFamily
+                    font.pointSize:         ScreenTools.largeFontPointSize
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                QGCSlider {
+                    id:         ambientLEDSlider
+                    height:     80
+                    width:      800
+                    stepSize:   0.05
+                    orientation: Qt.Horizontal
+                    style: SliderStyle {
+                        handle: Rectangle {
+                            anchors.centerIn:   parent
+                            color:              qgcPal.button
+                            border.color:       qgcPal.buttonText
+                            border.width:       1
+                            implicitWidth:      _radius * 2
+                            implicitHeight:     _radius * 2
+                            radius:             _radius
+
+                            property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 1.5)
+                        }
+                        groove: Rectangle {
+                            implicitWidth: 800
+                            implicitHeight: 60
+                            height: implicitHeight
+                            radius: 20
+                            color: "#bdbebf"
+
+                            Rectangle {
+                                implicitHeight: 60
+                                color: ledSwitch.checked ? "orange" : "#bdbebf"
+                                radius: 20
+                                implicitWidth: ambientLEDSlider.value * ambientLEDSlider.width
+                            }
+                        }
+                    }
+
+                    onValueChanged: if(ledSwitch.checked)
+                            _activeVehicle.sendCommand(_activeVehicle,183,false,ambientLEDSlider.value,
+                                    ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
+                }
+                Rectangle {
+                    opacity: 0
+                    height: 100
+                    width: 10
+                }
+
+                QGCLabel {
+                    text:           qsTr("BEAM INTENSITY")
+                    font.family:    ScreenTools.boldFontFamily
+                    font.pointSize:         ScreenTools.largeFontPointSize
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                QGCSlider {
+                    id:         beamSlider
+                    height:     80
+                    width:      800
+                    stepSize:   0.05
+                    orientation: Qt.Horizontal
+                    style: SliderStyle {
+                        handle: Rectangle {
+                            anchors.centerIn:   parent
+                            color:              qgcPal.button
+                            border.color:       qgcPal.buttonText
+                            border.width:       1
+                            implicitWidth:      _radius * 2
+                            implicitHeight:     _radius * 2
+                            radius:             _radius
+
+                            property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 1.5)
+                        }
+                        groove: Rectangle {
+                            implicitWidth: 800
+                            implicitHeight: 60
+                            height: implicitHeight
+                            radius: 20
+                            color: "#bdbebf"
+
+                            Rectangle {
+                                implicitHeight: 60
+                                color: ledSwitch.checked ? "orange" : "#bdbebf"
+                                radius: 20
+                                implicitWidth: beamSlider.value * beamSlider.width
+                            }
+                        }
+                    }
+
+                    onValueChanged: if(ledSwitch.checked)
+                            _activeVehicle.sendCommand(_activeVehicle,183,false,ambientLEDSlider.value,
+                                    ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
                 }
             }
         }

@@ -78,7 +78,7 @@ Item {
                 height:                 120
                 width:                  120
                 sourceSize.width:       width
-                source:                 "/qmlimages/deleavesLogo2.png"
+                source:                 "/qmlimages/logoCarreOutreach.png"
                 fillMode:               Image.PreserveAspectFit
                 visible: false
             }
@@ -93,18 +93,18 @@ Item {
             }
 
             Rectangle {
-                color:                  buttonClicked ? "#F26E1A" : "transparent"
+                color:                  buttonClicked ? "black" : "transparent"
                 anchors.verticalCenter: parent.verticalCenter
                 height:                 100
                 width:                  100
-                visible: false
+                visible: true
 
                 QGCColoredImage {
                     id:                     hamburgerIcon
                     anchors.fill:           parent
                     sourceSize.width:       width
                     source:                 "qrc:/qmlimages/Hamburger.svg"
-                    color:                  buttonClicked ? "transparent" : "#F26E1A"
+                    color:                  buttonClicked ? "transparent" : "black"
                     fillMode:               Image.PreserveAspectFit
 
                 }
@@ -124,7 +124,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 color: "white"
                 opacity: 0
-                visible: false
+                visible: true
             }
 
             Rectangle {
@@ -146,7 +146,7 @@ Item {
                 id:                     waitForVehicle
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 4
-                text:                   qsTr("Waiting For SIMBA Connection")
+                text:                   qsTr("Waiting For SPY II Connection")
                 font.pointSize:         ScreenTools.mediumFontPointSize
                 font.family:            ScreenTools.demiboldFontFamily
                 color:                  qgcPal.colorRed
@@ -184,10 +184,9 @@ Item {
 
                     Image {
                         id:                     deleavesAboutLogo
-                        height:                 400
-                        width:                  400
+                        width:                 deleavesAboutColumn.width
                         anchors.horizontalCenter: parent.horizontalCenter
-                        source:                 "/qmlimages/deleavesLogo.png"
+                        source:                 "/qmlimages/outreachLogo.png"
                         fillMode:               Image.PreserveAspectFit
                     }
 
@@ -235,7 +234,7 @@ Item {
 
                     QGCLabel {
                        id:                     deleavesWebsite
-                       text:                   "www.deleaves-drone.com"
+                       text:                   "www.outreachrobotics.com"
                        anchors.horizontalCenter: parent.horizontalCenter
                        font.pointSize:         ScreenTools.mediumFontPointSize
                        font.family:            ScreenTools.demiboldFontFamily
@@ -267,7 +266,7 @@ Item {
                     anchors.centerIn:   parent
                     width:              1645
                     height:             720
-                    source:             "/qmlimages/deleavesController.png"
+                    source:             "/qmlimages/spyController.png"
                     fillMode:           Image.PreserveAspectFit
                 }
 
