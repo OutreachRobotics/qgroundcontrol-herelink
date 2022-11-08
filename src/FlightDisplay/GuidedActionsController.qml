@@ -236,8 +236,8 @@ Item {
             confirmDialog.hideTrigger = Qt.binding(function() { return !showDisarm })
             break;
         case actionEmergencyStop:
-            confirmDialog.title = emergencyStopTitle
-            confirmDialog.message = emergencyStopMessage
+            confirmDialog.title = disarmTitle
+            confirmDialog.message = disarmMessage
             confirmDialog.hideTrigger = Qt.binding(function() { return !showEmergenyStop })
             break;
         case actionTakeoff:
