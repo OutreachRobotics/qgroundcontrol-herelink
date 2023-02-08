@@ -36,20 +36,20 @@ Item {
         anchors.top:    parent.top
         anchors.bottom: parent.bottom
 
-        Rectangle {
-            width: ScreenTools.defaultFontPixelWidth
-            height: 10
-            anchors.verticalCenter: parent.verticalCenter
-            color: "white"
-            opacity: 0
-        }
+//        Rectangle {
+//            width: ScreenTools.defaultFontPixelWidth
+//            height: 10
+//            anchors.verticalCenter: parent.verticalCenter
+//            color: "white"
+//            opacity: 0
+//        }
 
-        Rectangle {
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: 1
-            color: qgcPal.text
-        }
+//        Rectangle {
+//            anchors.top: parent.top
+//            anchors.bottom: parent.bottom
+//            width: 1
+//            color: qgcPal.text
+//        }
 
         QGCColoredImage {
             id:                 lengthIcon
@@ -65,7 +65,7 @@ Item {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               (-_activeVehicle.altitudeRelative.value + _atitude_offset).toFixed(2) + " m"
+            text:               ((-_activeVehicle.sensorsHealthBits+15000  + _atitude_offset)/100).toFixed(2) + " m"
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
         }
@@ -73,7 +73,7 @@ Item {
     }
     MouseArea {
         anchors.fill:   lengthRow
-        onDoubleClicked:      _atitude_offset=_activeVehicle.altitudeRelative.value
+        onDoubleClicked:      _atitude_offset=_activeVehicle.sensorsHealthBits-15000
     }
 
 }

@@ -146,7 +146,7 @@ Item {
                 id:                     waitForVehicle
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 4
-                text:                   qsTr("Waiting For SPY II Connection")
+                text:                   qsTr("Waiting For Winch Connection")
                 font.pointSize:         ScreenTools.mediumFontPointSize
                 font.family:            ScreenTools.demiboldFontFamily
                 color:                  qgcPal.colorRed

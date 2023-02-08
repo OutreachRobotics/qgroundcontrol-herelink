@@ -112,6 +112,7 @@ Rectangle {
                 source:             "/qmlimages/Gears.svg"
 //                color:              "#F26E1A"
                 onClicked:          toolBar.showSetupView()
+                visible:            false
             }
 
             QGCToolBarButton {
@@ -231,7 +232,8 @@ Rectangle {
         anchors.right:  parent.right
         height:         parent.height
         color:          qgcPal.window
-        visible:        _showLargeProgress
+//        visible:        _showLargeProgress
+        visible:        false
 
         property bool _initialDownloadComplete: _activeVehicle ? _activeVehicle.parameterManager.parametersReady : true
         property bool _userHide:                false

@@ -220,7 +220,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     if (!savePathDir.exists()) {
         QDir().mkpath(savePathDir.absolutePath());
         if (!savePathDir.exists()) {
-            qgcApp()->showMessage(tr("No SD Card inserted"));
+//            qgcApp()->showMessage(tr("No SD Card inserted"));
             savePath = "";
         }
     }
@@ -2964,7 +2964,7 @@ QString Vehicle::_vehicleIdSpeech(void)
 
 void Vehicle::_handleFlightModeChanged(const QString& flightMode)
 {
-    _say(QString(tr("%1 %2 flight mode")).arg(_vehicleIdSpeech()).arg(flightMode));
+    _say(QString("%1 %2").arg(_vehicleIdSpeech()).arg(QString(tr("Outreach Robotics winch connected"))));
 }
 
 void Vehicle::_announceArmedChanged(bool armed)
