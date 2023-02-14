@@ -242,6 +242,18 @@ QGCView {
             }
         }
     }
+
+    property bool videoStarted: false
+
+    function videoHandleFunction() {
+        videoStarted = !videoStarted
+        if (videoStarted) {
+            _activeVehicle.sendCommand(_activeVehicle,183,false,15)
+        } else {
+            _activeVehicle.sendCommand(_activeVehicle,183,false,25)
+        }
+    }
+
     Item{
         id: compass
         anchors.right: parent.right
@@ -253,7 +265,7 @@ QGCView {
 
         Rectangle {
             anchors.fill: parent
-            color: "white"
+            color: videoStarted ? "white" : "orange"
             border.color:   qgcPal.text
             opacity: 0.5
             radius: width*0.55
@@ -266,6 +278,11 @@ QGCView {
                 vehicle:                    _activeVehicle
                 z: 100
             }
+        }
+        MouseArea
+        {
+            anchors.fill:   parent
+            onClicked: videoHandleFunction()
         }
     }
 
