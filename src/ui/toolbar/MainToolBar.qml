@@ -112,6 +112,7 @@ Rectangle {
                 source:             "/qmlimages/Gears.svg"
 //                color:              "#F26E1A"
                 onClicked:          toolBar.showSetupView()
+                visible:            false
             }
 
             QGCToolBarButton {
@@ -132,6 +133,7 @@ Rectangle {
                 source:             "/qmlimages/deleaves.svg"
 //                color:              "#F26E1A"
                 onClicked:          toolBar.showFlyView()
+                visible:            false
             }
 
             QGCToolBarButton {

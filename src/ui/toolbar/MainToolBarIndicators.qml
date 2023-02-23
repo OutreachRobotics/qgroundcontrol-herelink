@@ -7,16 +7,28 @@
  *
  ****************************************************************************/
 
-import QtQuick          2.3
-import QtQuick.Controls 1.2
-import QtQuick.Layouts  1.2
-import QtQuick.Dialogs  1.2
+import QtQuick                  2.3
+import QtQuick.Controls         1.2
+import QtQuick.Controls.Styles  1.4
+import QtQuick.Dialogs          1.2
+import QtLocation               5.3
+import QtPositioning            5.3
+import QtQuick.Layouts          1.2
+import QtQuick.Window           2.2
+import QtQml.Models             2.1
+import QtMultimedia             5.5
 
-import QGroundControl                       1.0
-import QGroundControl.Controls              1.0
-import QGroundControl.MultiVehicleManager   1.0
-import QGroundControl.ScreenTools           1.0
-import QGroundControl.Palette               1.0
+import QGroundControl               1.0
+import QGroundControl.Airspace      1.0
+import QGroundControl.Controllers   1.0
+import QGroundControl.Controls      1.0
+import QGroundControl.FactSystem    1.0
+import QGroundControl.FlightDisplay 1.0
+import QGroundControl.FlightMap     1.0
+import QGroundControl.Palette       1.0
+import QGroundControl.ScreenTools   1.0
+import QGroundControl.Vehicle       1.0
+
 
 Item {
     property var  _activeVehicle:       QGroundControl.multiVehicleManager.activeVehicle
@@ -61,50 +73,47 @@ Item {
     property bool buttonClicked: false
 
     RowLayout {
-        id:                     deleavesLogo
+        id:                     mambaLogo
         anchors.bottomMargin:   1
         anchors.rightMargin:    ScreenTools.defaultFontPixelWidth / 2
         anchors.fill:           parent
         spacing:                ScreenTools.defaultFontPixelWidth * 2
 
         Row {
-            id:             deleavesLogoRow
+            id:             mambaLogoRow
             Layout.fillHeight:  true
             spacing:            ScreenTools.defaultFontPixelWidth / 2
 
             Image {
-                id:                     deleavesIcon
+                id:                     mambaIcon
                 anchors.verticalCenter: parent.verticalCenter
-                height:                 120
-                width:                  120
+                height:                 100
+                width:                  100
                 sourceSize.width:       width
-                source:                 "/qmlimages/deleavesLogo2.png"
+                source:                 "/qmlimages/outreach_logo.png"
                 fillMode:               Image.PreserveAspectFit
-                visible: false
             }
 
             Rectangle {
-                width: ScreenTools.defaultFontPixelWidth / 2
+                width: ScreenTools.defaultFontPixelWidth
                 height: 10
                 anchors.verticalCenter: parent.verticalCenter
                 color: "white"
                 opacity: 0
-                visible: false
             }
 
             Rectangle {
-                color:                  buttonClicked ? "#F26E1A" : "transparent"
+                color:                  buttonClicked ? "#000000" : "transparent"
                 anchors.verticalCenter: parent.verticalCenter
                 height:                 100
                 width:                  100
-                visible: false
 
                 QGCColoredImage {
                     id:                     hamburgerIcon
                     anchors.fill:           parent
                     sourceSize.width:       width
                     source:                 "qrc:/qmlimages/Hamburger.svg"
-                    color:                  buttonClicked ? "transparent" : "#F26E1A"
+                    color:                  buttonClicked ? "transparent" : "#000000"
                     fillMode:               Image.PreserveAspectFit
 
                 }
@@ -113,7 +122,7 @@ Item {
                     anchors.fill:   parent
                     onClicked: {
                         var centerX = mapToItem(toolBar, x, y).x
-                        mainWindow.showPopUp(deleavesMenu, centerX)
+                        mainWindow.showPopUp(hamburgerMenu, centerX)
                     }
                 }
             }
@@ -124,7 +133,6 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 color: "white"
                 opacity: 0
-                visible: false
             }
 
             Rectangle {
@@ -165,34 +173,33 @@ Item {
         }
 
         Component {
-            id: deleavesAbout
+            id: mambaAbout
 
             Rectangle {
-                width:  deleavesAboutColumn.width   + ScreenTools.defaultFontPixelWidth  * 3
-                height: deleavesAboutColumn.height  + ScreenTools.defaultFontPixelHeight * 2
+                width:  mambaAboutColumn.width   + ScreenTools.defaultFontPixelWidth  * 3
+                height: mambaAboutColumn.height  + ScreenTools.defaultFontPixelHeight * 2
                 radius: ScreenTools.defaultFontPixelHeight * 0.5
                 color:  qgcPal.window
                 border.color:   qgcPal.text
 
                 Column {
-                    id:                 deleavesAboutColumn
+                    id:                 mambaAboutColumn
                     spacing:            ScreenTools.defaultFontPixelHeight * 0.5
-                    width:              deleavesGrid.width + ScreenTools.defaultFontPixelWidth  * 2
-                    height:             deleavesGrid.height + deleavesAboutLogo.height + deleavesWebsite.height + ScreenTools.defaultFontPixelHeight
+                    width:              mambaGrid.width + ScreenTools.defaultFontPixelWidth  * 2
+                    height:             mambaGrid.height + mambaAboutLogo.height + mambaWebsite.height + ScreenTools.defaultFontPixelHeight
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     anchors.centerIn:   parent
 
                     Image {
-                        id:                     deleavesAboutLogo
-                        height:                 400
-                        width:                  400
+                        id:                    mambaAboutLogo
+                        width:                 600
                         anchors.horizontalCenter: parent.horizontalCenter
-                        source:                 "/qmlimages/deleavesLogo.png"
+                        source:                 "/qmlimages/outreach_logo_horz.png"
                         fillMode:               Image.PreserveAspectFit
                     }
 
                    GridLayout {
-                        id:                 deleavesGrid
+                        id:                 mambaGrid
                         anchors.margins:    ScreenTools.defaultFontPixelHeight
                         anchors.horizontalCenter: parent.horizontalCenter
                         columnSpacing:      ScreenTools.defaultFontPixelWidth
@@ -211,31 +218,31 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: "1.0.12"
+                            text: "3.0.0"
                             verticalAlignment: Text.AlignVCenter
                         }
 
                         QGCLabel {
-                            text: qsTr("DeLeaves Serial Number:")
+                            text: qsTr("Mamba Serial Number:")
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: _activeVehicle? " " + _activeVehicle.sensorsEnabledBits : "Not Connected"
+                            text: _activeVehicle? " " + "555555555" : " Not Connected"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: qsTr("DeLeaves Firmware Version:")
+                            text: qsTr("Mamba Firmware Version:")
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: _activeVehicle ? " " + _activeVehicle.sensorsHealthBits + "." + _activeVehicle.sensorsPresentBits + "." + Math.round(_activeVehicle.battery.current.value*100) : "Not Connected"
+                            text: _activeVehicle ? " 3.0.0" : " Not Connected"
                             verticalAlignment: Text.AlignVCenter
                         }
                     }
 
                     QGCLabel {
-                       id:                     deleavesWebsite
-                       text:                   "www.deleaves-drone.com"
+                       id:                     mambaWebsite
+                       text:                   "www.outreachrobotics.com"
                        anchors.horizontalCenter: parent.horizontalCenter
                        font.pointSize:         ScreenTools.mediumFontPointSize
                        font.family:            ScreenTools.demiboldFontFamily
@@ -252,18 +259,153 @@ Item {
             }
         }
 
+        property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 0.65)
+
         Component {
-            id: deleavesController
+            id: mambaParameters
+            Rectangle {
+                radius: ScreenTools.defaultFontPixelHeight * 0.5
+                color:  qgcPal.window
+                border.color:   qgcPal.text
+                opacity: 0.75
+                width:  ropeLengthSlider.width + ScreenTools.defaultFontPixelWidth*4
+                height: 780
+
+
+                Column {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    QGCLabel {
+                        text:           qsTr("ROPE LENGTH")
+                        font.family:    ScreenTools.boldFontFamily
+                        font.pointSize:         ScreenTools.largeFontPointSize
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    QGCSlider {
+                        id:         ropeLengthSlider
+                        height:     80
+                        width:      800
+                        value:      0.33
+                        stepSize:   0.33
+                        orientation: Qt.Horizontal
+                        style: SliderStyle {
+                            handle: Rectangle {
+                                anchors.centerIn:   parent
+                                color:              qgcPal.button
+                                border.color:       qgcPal.buttonText
+                                border.width:       1
+                                implicitWidth:      _radius * 2
+                                implicitHeight:     _radius * 2
+                                radius:             _radius
+
+                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 1.5)
+                            }
+                            groove: Rectangle {
+                                implicitWidth: 800
+                                implicitHeight: 60
+                                height: implicitHeight
+                                radius: 20
+                                color: "#bdbebf"
+
+                                Rectangle {
+                                    implicitHeight: 60
+                                    color: "orange"
+                                    radius: 20
+                                    implicitWidth: ropeLengthSlider.value * ropeLengthSlider.width
+                                }
+                            }
+                        }
+
+//                        onValueChanged:
+                    }
+
+                    QGCLabel {
+                        text:           (ropeLengthSlider.value*15+5).toFixed(0) + " m"
+                        font.family:    ScreenTools.boldFontFamily
+                        font.pointSize:         ScreenTools.largeFontPointSize
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+
+                    Rectangle {
+                        opacity: 0
+                        height: 100
+                        width: 10
+                    }
+
+                    QGCLabel {
+                        text:           qsTr("PARAM2")
+                        font.family:    ScreenTools.boldFontFamily
+                        font.pointSize:         ScreenTools.largeFontPointSize
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    QGCSlider {
+                        id:         param2Slider
+                        height:     80
+                        width:      800
+                        stepSize:   0.05
+                        orientation: Qt.Horizontal
+                        style: SliderStyle {
+                            handle: Rectangle {
+                                anchors.centerIn:   parent
+                                color:              qgcPal.button
+                                border.color:       qgcPal.buttonText
+                                border.width:       1
+                                implicitWidth:      _radius * 2
+                                implicitHeight:     _radius * 2
+                                radius:             _radius
+
+                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 1.5)
+                            }
+                            groove: Rectangle {
+                                implicitWidth: 800
+                                implicitHeight: 60
+                                height: implicitHeight
+                                radius: 20
+                                color: "#bdbebf"
+
+                                Rectangle {
+                                    implicitHeight: 60
+                                    color: "orange"
+                                    radius: 20
+                                    implicitWidth: param2Slider.value * param2Slider.width
+                                }
+                            }
+                        }
+
+//                        onValueChanged:
+                    }
+                    QGCLabel {
+                        text:           (param2Slider.value*100).toFixed(0)
+                        font.family:    ScreenTools.boldFontFamily
+                        font.pointSize:         ScreenTools.largeFontPointSize
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+
+                }
+                Component.onCompleted: {
+                    var pos = mapFromItem(toolBar, centerX, toolBar.height)
+                    x = pos.x
+                    y = pos.y + ScreenTools.defaultFontPixelHeight
+                }
+            }
+        }
+
+
+        Component {
+            id: mambaController
 
             Rectangle {
-                width:  deleavesControllerImage.width   + ScreenTools.defaultFontPixelWidth  * 3
-                height: deleavesControllerImage.height  + ScreenTools.defaultFontPixelHeight * 2
+                width:  mambaControllerImage.width   + ScreenTools.defaultFontPixelWidth  * 3
+                height: mambaControllerImage.height  + ScreenTools.defaultFontPixelHeight * 2
                 radius: ScreenTools.defaultFontPixelHeight * 0.5
                 color:  qgcPal.window
                 border.color:   qgcPal.text
 
                 Image {
-                    id:                 deleavesControllerImage
+                    id:                 mambaControllerImage
                     anchors.centerIn:   parent
                     width:              1645
                     height:             720
@@ -280,24 +422,24 @@ Item {
         }
 
         Component {
-            id: deleavesMenu
+            id: hamburgerMenu
 
             Rectangle {
-                width:  deleavesMenuColumn.width   + ScreenTools.defaultFontPixelWidth  * 6
-                height: deleavesMenuColumn.height  + ScreenTools.defaultFontPixelHeight
+                width:  hamburgerMenuCol.width   + ScreenTools.defaultFontPixelWidth  * 6
+                height: hamburgerMenuCol.height  + ScreenTools.defaultFontPixelHeight
                 radius: ScreenTools.defaultFontPixelHeight * 0.5
                 color:  qgcPal.window
                 border.color:   qgcPal.text
 
                 Column {
-                    id: deleavesMenuColumn
+                    id: hamburgerMenuCol
                     spacing:            ScreenTools.defaultFontPixelHeight * 0.5
-                    width:              deleavesControllerMenu.width
+                    width:              mambaControllerMenu.width
                     anchors.margins:    ScreenTools.defaultFontPixelHeight
                     anchors.centerIn:   parent
 
                     QGCLabel {
-                        id:                     deleavesControllerMenu
+                        id:                     mambaControllerMenu
                         height:                 ScreenTools.defaultFontPixelHeight * 2
                         anchors.horizontalCenter: parent.horizontalCenter
                         text:                   qsTr("Controller Configuration")
@@ -308,7 +450,7 @@ Item {
                         MouseArea {
                             anchors.fill:   parent
                             onClicked: {
-                                mainWindow.showPopUp(deleavesController, 30)
+                                mainWindow.showPopUp(mambaController, 30)
                             }
                         }
                     }
@@ -321,7 +463,7 @@ Item {
                     }
 
                     QGCLabel {
-                        id:                     deleavesAboutMenu
+                        id:                     aboutMenu
                         text:                   qsTr("About")
                         width:                  parent.width
                         height:                 ScreenTools.defaultFontPixelHeight * 2
@@ -334,7 +476,33 @@ Item {
                             anchors.fill:   parent
                             onClicked: {
                                 var centerX = mapToItem(toolBar, x, y).x  + (width / 2)
-                                mainWindow.showPopUp(deleavesAbout, centerX)
+                                mainWindow.showPopUp(mambaAbout, centerX)
+                            }
+                        }
+                   }
+
+                    Rectangle {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width + ScreenTools.defaultFontPixelWidth * 6
+                        height: 2
+                        color: qgcPal.text
+                    }
+
+                    QGCLabel {
+                        id:                     parametersMenu
+                        text:                   qsTr("Parameters")
+                        width:                  parent.width
+                        height:                 ScreenTools.defaultFontPixelHeight * 2
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pointSize:         ScreenTools.mediumFontPointSize
+                        font.family:            ScreenTools.demiboldFontFamily
+                        verticalAlignment: Text.AlignVCenter
+
+                        MouseArea {
+                            anchors.fill:   parent
+                            onClicked: {
+                                var centerX = mapToItem(toolBar, x, y).x  + (width / 2)
+                                mainWindow.showPopUp(mambaParameters, centerX)
                             }
                         }
                    }

@@ -18,6 +18,8 @@ import QtQuick.Layouts          1.2
 import QtQuick.Window           2.2
 import QtQml.Models             2.1
 import QtMultimedia             5.5
+import QtQuick.Extras           1.4
+
 
 import QGroundControl               1.0
 import QGroundControl.Airspace      1.0
@@ -161,130 +163,147 @@ QGCView {
         }
     }
 
-    property bool isArrowVisible: false
-    property bool isArrow: true
-    property real arrowOrientation: 0
+    Item{
+        id: cameraToggle
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 10
+        height: 200
+        width: 300
+        z: 50
+        visible: _activeVehicle ? true : false
 
-    function getArrowOrientation() {
-        if(_activeVehicle.pitch.value < 10)
-        {
-            return 0
-        }
-        else if(_activeVehicle.pitch.value < 20)
-        {
-            return 0
-        }
-        else if(_activeVehicle.pitch.value < 30)
-        {
-            return 90
-        }
-        else if(_activeVehicle.pitch.value < 40)
-        {
-            return 180
-        }
-        else
-        {
-            return 270
+        Rectangle {
+            id: cameraRect
+            anchors.fill: parent
+            color: "white"
+            border.color:   qgcPal.text
+            opacity: 0.5
+            radius: width*0.1
+
+            Column {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 20
+
+                QGCLabel {
+                    text:           qsTr("CAM SWITCH")
+                    font.family:    ScreenTools.boldFontFamily
+                    font.pointSize:         ScreenTools.largeFontPointSize
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                QGCSwitch {
+                    id:             camSwitch
+                    enabled:        true
+                    checked:        false
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    style: SwitchStyle {
+                            groove: Rectangle {
+                                implicitWidth: 250
+                                implicitHeight: 60
+                                border.width: 1
+                                color: camSwitch.checked ? "orange" : "#bdbebf"
+                                radius: 30
+                            }
+                            handle: Rectangle {
+                                implicitWidth: 125
+                                implicitHeight: 60
+                                radius: 30
+                            }
+                        }
+                    onCheckedChanged: {
+                        if(checked) {
+                            // _activeVehicle.sendCommand(_activeVehicle,183,false,0)
+                        } else {
+                            // _activeVehicle.sendCommand(_activeVehicle,183,false,1)
+                        }
+                    }
+                }
+            }
         }
     }
 
-    function getArrowVisibility() {
-        if(_activeVehicle.pitch.value < 10)
-        {
-            return false
-        }
-        else if(_activeVehicle.pitch.value < 20)
-        {
-            return true
-        }
-        else if(_activeVehicle.pitch.value < 30)
-        {
-            return true
-        }
-        else if(_activeVehicle.pitch.value < 40)
-        {
-            return true
-        }
-        else
-        {
-            return true
-        }
 
-    }
-
-    property real   _maxPitchAngle:       17.5
-    property real   _maxRollAngle:        11.3
-    Item {
-        id: workspace
+    Item{
+        id: workspaceIndicator
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: 10
-        height: 300
+        height: 400
         width: 200
         z: 50
+        visible: _activeVehicle? true : false
 
         Rectangle {
+            id: workspaceRect
             anchors.fill: parent
             color: "white"
             border.color:   qgcPal.text
             opacity: 0.5
             radius: width*0.2
 
-            Rectangle {
-                color: "black"
-                width:30
-                height: 30
-                radius: width*0.5
-                opacity: _activeVehicle? 1.0 : 0.0
-                x: Math.min(Math.max(workspace.width/2-width/2 + -(_activeVehicle.roll.value)/_maxRollAngle*workspace.width/2, -width/2),workspace.width-width/2)
-                y: Math.min(Math.max(workspace.height/2-height/2 + -(_activeVehicle.pitch.value)/_maxPitchAngle*workspace.height/2, -height/2),workspace.height-height/2)
-                z: 100
+            ColumnLayout {
+                id: workspaceCol
+                anchors.fill: parent
+                Layout.alignment:Qt.AlignHCenter
+
+                Gauge {
+                    id: reachGauge
+                    anchors.top:            parent.top
+                    anchors.left:           parent.left
+                    anchors.leftMargin:     54
+                    implicitWidth:          100
+                    implicitHeight:         340
+                    minimumValue:           0
+                    maximumValue:           100
+                    value:                  44
+                    tickmarkStepSize:       100
+                    minorTickmarkCount:     0
+                    orientation:            Qt.Vertical
+                    tickmarkAlignment:      Qt.AlignRight
+                    style: GaugeStyle {
+                        tickmark: Item {
+                            visible:    false
+                            implicitWidth:      0
+                        }
+                        tickmarkLabel: Item {
+                            visible:    false
+                            implicitWidth:      0
+                        }
+                        background: Rectangle {
+                            color: "white"
+                            border.color: "black"
+                        }
+                        valueBar: Rectangle {
+                            color: "orange"
+                            implicitWidth: 90
+                        }
+                    }
+                }
+                Label {
+                    id: distanceLabel
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom:     parent.bottom
+                    anchors.margins:    20
+                    verticalAlignment:  Text.AlignVCenter
+                    font.pointSize:     ScreenTools.mediumFontPointSize
+//                    text:               (_activeVehicle.sensorsHealthBits-30)>20?((_activeVehicle.sensorsHealthBits-30)/100).toFixed(1):"<0.2" + " m"
+//                    color:              (_activeVehicle.sensorsHealthBits-30)>100?"black":"red"
+                    text: "5.4 m"
+                }
             }
         }
-    }
-
-    property bool videoStarted: false
-
-    function videoHandleFunction() {
-        videoStarted = !videoStarted
-        if (videoStarted) {
-            _activeVehicle.sendCommand(_activeVehicle,183,false,15)
-        } else {
-            _activeVehicle.sendCommand(_activeVehicle,183,false,25)
-        }
-    }
-
-    Item{
-        id: compass
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.margins: 10
-        height: 300
-        width: 300
-        z: 50
-
         Rectangle {
-            anchors.fill: parent
-            color: videoStarted ? "white" : "orange"
-            border.color:   qgcPal.text
-            opacity: 0.5
-            radius: width*0.55
-
-            QGCCompassWidget {
-                id:                         compass_widget
-                anchors.horizontalCenter:   parent.horizontalCenter
-                anchors.verticalCenter:     parent.verticalCenter
-                size:                       parent.width * 0.95
-                vehicle:                    _activeVehicle
-                z: 100
-            }
-        }
-        MouseArea
-        {
-            anchors.fill:   parent
-            onClicked: videoHandleFunction()
+            color: "black"
+            anchors.top: parent.top
+            anchors.topMargin: (20+295*(1-reachPercent))
+            anchors.horizontalCenter: parent.horizontalCenter
+            width:  90
+            height: 5
         }
     }
+    property real reachPercent: 0.64
 
 
 

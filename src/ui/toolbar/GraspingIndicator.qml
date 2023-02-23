@@ -49,45 +49,6 @@ Item {
             width: 1
             color: qgcPal.text
         }
-
-        Gauge {
-            id: graspingGauge
-            anchors.verticalCenter: parent.verticalCenter
-            implicitWidth:          150
-            implicitHeight:         50
-            minimumValue:           0
-            maximumValue:           100
-            value:                  _activeVehicle.sensorsPresentBits
-            tickmarkStepSize:       100
-            minorTickmarkCount:     0
-            orientation:            Qt.Horizontal
-            style: GaugeStyle {
-                tickmark: Item {
-                    visible: false
-                }
-                tickmarkLabel: Item {
-                    visible: false
-                }
-                background: Rectangle {
-                    color: "white"
-                    border.color: "black"
-                }
-                valueBar: Rectangle {
-                    color: "#F26E1C"
-                    implicitWidth: 45
-                }
-            }
-        }
-
-        QGCLabel {
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            verticalAlignment:  Text.AlignVCenter
-            text:               Math.floor(_activeVehicle.sensorsPresentBits) + "%"
-            font.pointSize:     ScreenTools.mediumFontPointSize
-            color:              qgcPal.buttonText
-        }
-
         Rectangle {
             width: ScreenTools.defaultFontPixelWidth
             height: 10
@@ -100,29 +61,18 @@ Item {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               _activeVehicle.sensorsEnabledBits ? qsTr("On") : qsTr("Off")
+            text:               "Sampl. " + Math.floor(_activeVehicle.sensorsPresentBits) + "%"
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
-            QGCPalette { id: qgcPal }
-
         }
 
         Rectangle {
-            width: ScreenTools.defaultFontPixelWidth*2
+            width: ScreenTools.defaultFontPixelWidth
             height: 10
             anchors.verticalCenter: parent.verticalCenter
             color: "white"
             opacity: 0
         }
-
-//        QGCLabel {
-//            anchors.top:        parent.top
-//            anchors.bottom:     parent.bottom
-//            verticalAlignment:  Text.AlignVCenter
-//            text:               _activeVehicle.sensorsHealthBits ? qsTr("T") : qsTr("")
-//            font.pointSize:     ScreenTools.mediumFontPointSize
-//            color:              qgcPal.buttonText
-//        }
 
         QGCColoredImage {
             id:                 taxiIcon
@@ -132,7 +82,27 @@ Item {
             source:             "/qmlimages/taxi.svg"
             fillMode:           Image.PreserveAspectFit
             sourceSize.height:  height
-            color: "black"
+            color:              "black"
+            visible:            _activeVehicle.sensorsHealthBits ? true : false
+        }
+
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
+
+        QGCColoredImage {
+            id:                 wristIcon
+            width:              height
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            source:             "/qmlimages/robot_wrist.png"
+            fillMode:           Image.PreserveAspectFit
+            sourceSize.height:  height
+            color:              "black"
             visible:            _activeVehicle.sensorsHealthBits ? true : false
         }
 
