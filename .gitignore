@@ -87,3 +87,8 @@ Qt*-linux*.tar.*
 .vs/
 
 libs/airmapd/include/boost
+
+gstreamer-1.0-android-armv7-1.14.4/
+gstreamer-1.0-android-universal-1.14.4/
+libs/OpenSSL/
+libs/gst-plugins-good/
