@@ -88,6 +88,7 @@ const char* Vehicle::_distanceSensorFactGroupName =     "distanceSensor";
 const char* Vehicle::_estimatorStatusFactGroupName =    "estimatorStatus";
 
 QFile logFile;
+QFile parameterFile;
 
 // Standard connected vehicle
 Vehicle::Vehicle(LinkInterface*             link,
@@ -215,6 +216,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _distanceSensorFactGroup(this)
     , _estimatorStatusFactGroup(this)
 {  
+    // Create SD card log for the sampler
     QString savePath = AndroidInterface::getSdcardPath() + "/QGroundControl/Logs";
     QDir savePathDir(savePath);
     if (!savePathDir.exists()) {
@@ -227,6 +229,21 @@ Vehicle::Vehicle(LinkInterface*             link,
     QString fileName = QString::number(QDateTime::currentSecsSinceEpoch()) + ".del";
     logFile.setFileName(savePathDir.filePath(fileName));
     logFile.open(QIODevice::WriteOnly);
+
+    // Create SD card file to store parameters
+    QString parameterFileName = "mamba.par";
+    parameterFile.setFileName(savePathDir.filePath(parameterFileName));
+    parameterFile.open(QIODevice::ReadWrite | QIODevice::Text);
+    QTextStream parameterStream(&parameterFile);
+    if(!parameterFile.size())
+    {
+        rope_length = 10;
+        parameterStream << rope_length;
+    }
+    else
+    {
+        rope_length = parameterStream.readAll().toInt();
+    }
 
     connect(_joystickManager, &JoystickManager::activeJoystickChanged, this, &Vehicle::_loadSettings);
     connect(qgcApp()->toolbox()->multiVehicleManager(), &MultiVehicleManager::activeVehicleAvailableChanged, this, &Vehicle::_loadSettings);
@@ -1128,6 +1145,10 @@ void Vehicle::_handleAttitude(mavlink_message_t& message)
 
     mavlink_attitude_t attitude;
     mavlink_msg_attitude_decode(&message, &attitude);
+
+    rollRate()->setRawValue(attitude.rollspeed);
+    pitchRate()->setRawValue(attitude.pitchspeed);
+    yawRate()->setRawValue(attitude.yawspeed);
 
     _handleAttitudeWorker(attitude.roll, attitude.pitch, attitude.yaw);
 }
@@ -3450,6 +3471,19 @@ void Vehicle::setSoloFirmware(bool soloFirmware)
 void Vehicle::motorTest(int motor, int percent)
 {
     sendMavCommand(_defaultComponentId, MAV_CMD_DO_MOTOR_TEST, true, motor, MOTOR_TEST_THROTTLE_PERCENT, percent, 0, 0, MOTOR_TEST_ORDER_BOARD);
+}
+
+void Vehicle::setRopeLenght(unsigned char length)
+{
+    rope_length = length;
+    parameterFile.resize(0);
+    QTextStream parameterStream(&parameterFile);
+    parameterStream << rope_length;
+}
+
+unsigned char Vehicle::getRopeLenght()
+{
+    return rope_length;
 }
 
 QString Vehicle::brandImageIndoor(void) const

@@ -756,6 +756,9 @@ public:
     ///     @param percent 0-no power, 100-full power
     Q_INVOKABLE void motorTest(int motor, int percent);
 
+    Q_INVOKABLE void setRopeLenght(unsigned char length);
+    Q_INVOKABLE unsigned char getRopeLenght(void);
+
     bool    guidedModeSupported     (void) const;
     bool    pauseVehicleSupported   (void) const;
     bool    orbitModeSupported      (void) const;
@@ -932,6 +935,9 @@ public:
     bool            highLatencyLink         () const { return _highLatencyLink; }
     bool            orbitActive             () const { return _orbitActive; }
     QGCMapCircle*   orbitMapCircle          () { return &_orbitMapCircle; }
+
+    unsigned char rope_length;
+
 
     /// Get the maximum MAVLink protocol version supported
     /// @return the maximum version

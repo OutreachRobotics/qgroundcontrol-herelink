@@ -57,13 +57,39 @@ Item {
             opacity: 0
         }
 
+        QGCColoredImage {
+            id:                 shearsIcon
+            width:              height
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            source:             "/qmlimages/shears.png"
+            fillMode:           Image.PreserveAspectFit
+            sourceSize.height:  height
+            color:              "black"
+        }
+
         QGCLabel {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               "Sampl. " + Math.floor(_activeVehicle.sensorsPresentBits) + "%"
+            text:               Math.floor(_activeVehicle.sensorsPresentBits) + "%"
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
+        }
+
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
+
+        Rectangle {
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 1
+            color: qgcPal.text
         }
 
         Rectangle {
@@ -83,7 +109,7 @@ Item {
             fillMode:           Image.PreserveAspectFit
             sourceSize.height:  height
             color:              "black"
-            visible:            _activeVehicle.sensorsHealthBits ? true : false
+            visible:            _activeVehicle.sensorsEnabledBits ? true : false
         }
 
         Rectangle {

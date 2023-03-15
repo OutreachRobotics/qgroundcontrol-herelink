@@ -191,6 +191,8 @@
         <file alias="outreach_logo.png">src/ui/toolbar/Images/outreach_logo.png</file>
         <file alias="robot_wrist.png">src/ui/toolbar/Images/robot_wrist.png</file>
         <file alias="outreach_logo_horz.png">src/ui/toolbar/Images/logoNoir_Outreach.png</file>
+        <file alias="camera_switch.png">src/ui/toolbar/Images/camera_switch.png</file>
+        <file alias="shears.png">src/ui/toolbar/Images/shears.png</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="action.svg">resources/action.svg</file>

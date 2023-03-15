@@ -167,9 +167,10 @@ QGCView {
         id: cameraToggle
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: 10
-        height: 200
-        width: 300
+        anchors.bottomMargin: 10
+        anchors.rightMargin: 15
+        height: camIcon.height+camSwitch.height+ScreenTools.defaultFontPixelHeight*1.5
+        width: camSwitch.width+ScreenTools.defaultFontPixelWidth*2
         z: 50
         visible: _activeVehicle ? true : false
 
@@ -186,11 +187,14 @@ QGCView {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 20
 
-                QGCLabel {
-                    text:           qsTr("CAM SWITCH")
-                    font.family:    ScreenTools.boldFontFamily
-                    font.pointSize:         ScreenTools.largeFontPointSize
+                QGCColoredImage {
+                    id:                 camIcon
+                    width:              height
+                    height:             120
                     anchors.horizontalCenter: parent.horizontalCenter
+                    source:             "/qmlimages/camera_switch.png"
+                    fillMode:           Image.PreserveAspectFit
+                    color:              "black"
                 }
 
                 QGCSwitch {
@@ -200,30 +204,45 @@ QGCView {
                     anchors.horizontalCenter: parent.horizontalCenter
                     style: SwitchStyle {
                             groove: Rectangle {
-                                implicitWidth: 250
-                                implicitHeight: 60
+                                implicitWidth: 180
+                                implicitHeight: 100
                                 border.width: 1
                                 color: camSwitch.checked ? "orange" : "#bdbebf"
                                 radius: 30
                             }
                             handle: Rectangle {
-                                implicitWidth: 125
-                                implicitHeight: 60
+                                implicitWidth: 90
+                                implicitHeight: 100
                                 radius: 30
                             }
                         }
                     onCheckedChanged: {
                         if(checked) {
-                            // _activeVehicle.sendCommand(_activeVehicle,183,false,0)
+                             _activeVehicle.sendCommand(_activeVehicle,183,false,1)
                         } else {
-                            // _activeVehicle.sendCommand(_activeVehicle,183,false,1)
+                             _activeVehicle.sendCommand(_activeVehicle,183,false,0)
                         }
                     }
                 }
             }
         }
+        Timer {
+            interval: 10000; running: true; repeat: true
+            onTriggered: {
+                _activeVehicle.sendCommand(_activeVehicle,184,false,_activeVehicle.getRopeLenght())
+            }
+        }
     }
 
+    property real deg2rad: (3.1416/180)
+    function getReachValue()
+    {
+        return activeVehicle.pitchRate.value>1.0?1.0:activeVehicle.pitchRate.value<0?0:activeVehicle.pitchRate.value
+    }
+    function getPitchValue()
+    {
+        return ((activeVehicle.pitch.value*deg2rad)>1.0?100:(activeVehicle.pitch.value*deg2rad)<0?0:activeVehicle.pitch.value*100*deg2rad)
+    }
 
     Item{
         id: workspaceIndicator
@@ -257,7 +276,7 @@ QGCView {
                     implicitHeight:         340
                     minimumValue:           0
                     maximumValue:           100
-                    value:                  44
+                    value:                  getPitchValue()
                     tickmarkStepSize:       100
                     minorTickmarkCount:     0
                     orientation:            Qt.Vertical
@@ -276,7 +295,7 @@ QGCView {
                             border.color: "black"
                         }
                         valueBar: Rectangle {
-                            color: "orange"
+                            color: getPitchValue()>90 ? "red" : "green"
                             implicitWidth: 90
                         }
                     }
@@ -288,22 +307,62 @@ QGCView {
                     anchors.margins:    20
                     verticalAlignment:  Text.AlignVCenter
                     font.pointSize:     ScreenTools.mediumFontPointSize
-//                    text:               (_activeVehicle.sensorsHealthBits-30)>20?((_activeVehicle.sensorsHealthBits-30)/100).toFixed(1):"<0.2" + " m"
-//                    color:              (_activeVehicle.sensorsHealthBits-30)>100?"black":"red"
-                    text: "5.4 m"
+                    text:               (_activeVehicle.rollRate.value)>0.2?(_activeVehicle.rollRate.value).toFixed(1)+" m":"<0.2" + " m"
+                    color:              (_activeVehicle.rollRate.value)>0.2?"black":"red"
                 }
             }
         }
         Rectangle {
             color: "black"
             anchors.top: parent.top
-            anchors.topMargin: (20+295*(1-reachPercent))
+            anchors.topMargin: (20+295*(1-getReachValue()))
             anchors.horizontalCenter: parent.horizontalCenter
             width:  90
             height: 5
         }
     }
-    property real reachPercent: 0.64
+
+    property bool isLimitVisible: false
+
+
+    Item{
+        id: rollLimitIndicator
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.margins: 10
+        height: rollLimitLabel.height + ScreenTools.defaultFontPixelHeight * 2
+        width: rollLimitLabel.width + ScreenTools.defaultFontPixelWidth * 4
+        z: 50
+        visible: _activeVehicle && Math.abs(_activeVehicle.roll.value*deg2rad)>0.9 && isLimitVisible? true : false
+
+        Rectangle {
+            id: rollLimitRect
+            anchors.fill: parent
+            color: "white"
+            border.color:   "red"
+            border.width: 10
+            opacity: 0.7
+            radius: width*0.05
+
+            QGCLabel {
+                id: rollLimitLabel
+                anchors.verticalCenter: parent.verticalCenter
+                text:           qsTr("LATERAL LIMIT REACHED")
+                font.family:    ScreenTools.boldFontFamily
+                font.pointSize:         ScreenTools.largeFontPointSize
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "red"
+
+            }
+        }
+        Timer {
+            interval: 800; running: true; repeat: true
+            onTriggered: {
+                isLimitVisible = !isLimitVisible
+            }
+        }
+    }
+
 
 
 

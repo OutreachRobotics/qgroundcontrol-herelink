@@ -263,6 +263,7 @@ Item {
 
         Component {
             id: mambaParameters
+            // Parameter sent in flightDisplayView with a 10 sec timer
             Rectangle {
                 radius: ScreenTools.defaultFontPixelHeight * 0.5
                 color:  qgcPal.window
@@ -270,7 +271,6 @@ Item {
                 opacity: 0.75
                 width:  ropeLengthSlider.width + ScreenTools.defaultFontPixelWidth*4
                 height: 780
-
 
                 Column {
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -288,8 +288,8 @@ Item {
                         id:         ropeLengthSlider
                         height:     80
                         width:      800
-                        value:      0.33
-                        stepSize:   0.33
+                        value:     ( _activeVehicle.getRopeLenght()-5)/15
+                        stepSize:   0.3333
                         orientation: Qt.Horizontal
                         style: SliderStyle {
                             handle: Rectangle {
@@ -318,8 +318,7 @@ Item {
                                 }
                             }
                         }
-
-//                        onValueChanged:
+                        onValueChanged: _activeVehicle.setRopeLenght((ropeLengthSlider.value*15+5).toFixed(0))
                     }
 
                     QGCLabel {
