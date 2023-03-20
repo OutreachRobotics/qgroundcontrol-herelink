@@ -548,7 +548,7 @@ QGCView {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         width:  parent.width / 1.5
-        height: 780
+        height: 550
         visible: _lighting_visible && _activeVehicle ? true : false
         z: 50
 
@@ -616,6 +616,7 @@ QGCView {
                     height:     80
                     width:      800
                     stepSize:   0.05
+                    value:      0.5
                     orientation: Qt.Horizontal
                     style: SliderStyle {
                         handle: Rectangle {
@@ -660,6 +661,7 @@ QGCView {
                     font.family:    ScreenTools.boldFontFamily
                     font.pointSize:         ScreenTools.largeFontPointSize
                     anchors.horizontalCenter: parent.horizontalCenter
+                    visible: false
                 }
                 QGCSlider {
                     id:         beamSlider
@@ -667,6 +669,7 @@ QGCView {
                     width:      800
                     stepSize:   0.05
                     orientation: Qt.Horizontal
+                    visible:    false
                     style: SliderStyle {
                         handle: Rectangle {
                             anchors.centerIn:   parent
