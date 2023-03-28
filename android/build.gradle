@@ -3,17 +3,21 @@ buildscript {
     repositories {
         maven  {
             url "https://repo1.maven.org/maven2"
+            mavenCentral();
+            jcenter();
+            google();
         }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.0'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 
@@ -53,12 +57,29 @@ android {
             jniLibs.srcDirs = ['libs']
        }
     }
+    buildTypes {
+        debug{
+            debuggable true
+            minifyEnabled false
+            multiDexEnabled true
+        }
+        release {
+            minifyEnabled false
+            multiDexEnabled true
+        }
+    }
 
     aaptOptions {
         cruncherEnabled = false
+        noCompress ''
     }
 
     lintOptions {
         abortOnError false
+    }
+
+    defaultConfig {
+    minSdkVersion 14
+    targetSdkVersion 22
     }
 }
