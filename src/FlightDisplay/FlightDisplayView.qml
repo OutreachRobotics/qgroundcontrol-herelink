@@ -322,44 +322,85 @@ QGCView {
         }
     }
 
-    property bool isLimitVisible: false
+    function getRollValue() {
+        if((activeVehicle.roll.value*deg2rad)>1.0)
+            return 100
+        else if((activeVehicle.roll.value*deg2rad)<-1.0)
+            return -100
+        else
+            return (activeVehicle.pitch.value*100*deg2rad*100)
+    }
+    function getGaugeWidth() {
+        var maxSpan = Math.abs(lateralReachGauge.maximumValue) + Math.abs(lateralReachGauge.minimumValue)
+        var fill = Math.abs(lateralReachGauge.value)
+        var fillPercent = fill/maxSpan
+
+        var fillWidth = lateralReachGauge.width * fillPercent
+        return fillWidth - fillWidth/8
+    }
 
 
     Item{
-        id: rollLimitIndicator
+        id: rollWorkspace
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.margins: 10
-        height: rollLimitLabel.height + ScreenTools.defaultFontPixelHeight * 2
-        width: rollLimitLabel.width + ScreenTools.defaultFontPixelWidth * 4
+        height: lateralReachGauge.height + 10
+        width: lateralReachGauge.width + 20
+        opacity: 0.7
         z: 50
-        visible: _activeVehicle && Math.abs(_activeVehicle.roll.value*deg2rad)>0.9 && isLimitVisible? true : false
-
+        visible: _activeVehicle ? true : false
         Rectangle {
-            id: rollLimitRect
-            anchors.fill: parent
             color: "white"
-            border.color:   "red"
-            border.width: 10
-            opacity: 0.7
+            border.width: 1
             radius: width*0.05
-
-            QGCLabel {
-                id: rollLimitLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text:           qsTr("LATERAL LIMIT REACHED")
-                font.family:    ScreenTools.boldFontFamily
-                font.pointSize:         ScreenTools.largeFontPointSize
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: "red"
-
+            anchors.fill: parent
+            Gauge {
+                id:                     lateralReachGauge
+                anchors.horizontalCenter:   parent.horizontalCenter
+                anchors.verticalCenter:    parent.verticalCenter
+                implicitWidth:          200
+                implicitHeight:         20
+                minimumValue:           -100
+                maximumValue:           100
+                value:                  getRollValue()
+                tickmarkStepSize:       10
+                minorTickmarkCount:     0
+                orientation:            Qt.Horizontal
+                style: GaugeStyle {
+                    tickmark: Item {
+                        visible:    false
+                        implicitWidth:      0
+                    }
+                    tickmarkLabel: Item {
+                        visible:    false
+                        implicitWidth:      0
+                    }
+                    background: Rectangle {
+                        color: "white"
+                        border.color: "black"
+                    }
+                    valueBar:
+                        Item {
+                            anchors.top: parent.top
+                            implicitWidth: 18
+                        Rectangle {
+                            color: getRollValue()>90 || getRollValue()<-90 ? "red" : "green"
+                            width:          parent.width
+                            implicitHeight: getGaugeWidth()
+                            y: getRollValue() < 0? -height : 0
+                        }
+                    }
+                }
             }
         }
-        Timer {
-            interval: 800; running: true; repeat: true
-            onTriggered: {
-                isLimitVisible = !isLimitVisible
-            }
+        Rectangle {
+            color: "black"
+            anchors.left: parent.left
+            anchors.leftMargin: lateralReachGauge.width/2+9
+            anchors.verticalCenter: parent.verticalCenter
+            width:  3
+            height: 17
         }
     }
 
