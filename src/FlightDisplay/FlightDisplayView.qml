@@ -328,7 +328,7 @@ QGCView {
         else if((activeVehicle.roll.value*deg2rad)<-1.0)
             return -100
         else
-            return (activeVehicle.pitch.value*100*deg2rad*100)
+            return (activeVehicle.roll.value*100*deg2rad)
     }
     function getGaugeWidth() {
         var maxSpan = Math.abs(lateralReachGauge.maximumValue) + Math.abs(lateralReachGauge.minimumValue)
@@ -336,7 +336,7 @@ QGCView {
         var fillPercent = fill/maxSpan
 
         var fillWidth = lateralReachGauge.width * fillPercent
-        return fillWidth - fillWidth/8
+        return fillWidth - fillWidth/5
     }
 
 
@@ -359,8 +359,8 @@ QGCView {
                 id:                     lateralReachGauge
                 anchors.horizontalCenter:   parent.horizontalCenter
                 anchors.verticalCenter:    parent.verticalCenter
-                implicitWidth:          200
-                implicitHeight:         20
+                implicitWidth:          340
+                implicitHeight:         50
                 minimumValue:           -100
                 maximumValue:           100
                 value:                  getRollValue()
@@ -383,7 +383,7 @@ QGCView {
                     valueBar:
                         Item {
                             anchors.top: parent.top
-                            implicitWidth: 18
+                            implicitWidth: 45
                         Rectangle {
                             color: getRollValue()>90 || getRollValue()<-90 ? "red" : "green"
                             width:          parent.width
@@ -400,7 +400,7 @@ QGCView {
             anchors.leftMargin: lateralReachGauge.width/2+9
             anchors.verticalCenter: parent.verticalCenter
             width:  3
-            height: 17
+            height: 41
         }
     }
 
