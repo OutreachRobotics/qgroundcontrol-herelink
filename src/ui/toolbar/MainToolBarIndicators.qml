@@ -154,7 +154,7 @@ Item {
                 id:                     waitForVehicle
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 4
-                text:                   qsTr("Waiting For Mamba Connection")
+                text:                   qsTr("Waiting For SPY III Connection")
                 font.pointSize:         ScreenTools.mediumFontPointSize
                 font.family:            ScreenTools.demiboldFontFamily
                 color:                  qgcPal.colorRed
@@ -497,13 +497,13 @@ Item {
                         font.family:            ScreenTools.demiboldFontFamily
                         verticalAlignment: Text.AlignVCenter
 
-                        MouseArea {
-                            anchors.fill:   parent
-                            onClicked: {
-                                var centerX = mapToItem(toolBar, x, y).x  + (width / 2)
-                                mainWindow.showPopUp(mambaParameters, centerX)
-                            }
-                        }
+//                        MouseArea {
+//                            anchors.fill:   parent
+//                            onClicked: {
+//                                var centerX = mapToItem(toolBar, x, y).x  + (width / 2)
+//                                mainWindow.showPopUp(mambaParameters, centerX)
+//                            }
+//                        }
                    }
                 }
                 Component.onCompleted: {

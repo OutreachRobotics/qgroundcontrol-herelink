@@ -163,76 +163,76 @@ QGCView {
         }
     }
 
-    Item{
-        id: cameraToggle
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        anchors.rightMargin: 15
-        height: camIcon.height+camSwitch.height+ScreenTools.defaultFontPixelHeight*1.5
-        width: camSwitch.width+ScreenTools.defaultFontPixelWidth*2
-        z: 50
-        visible: _activeVehicle ? true : false
+//    Item{
+//        id: cameraToggle
+//        anchors.right: parent.right
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: 10
+//        anchors.rightMargin: 15
+//        height: camIcon.height+camSwitch.height+ScreenTools.defaultFontPixelHeight*1.5
+//        width: camSwitch.width+ScreenTools.defaultFontPixelWidth*2
+//        z: 50
+//        visible: _activeVehicle ? true : false
 
-        Rectangle {
-            id: cameraRect
-            anchors.fill: parent
-            color: "white"
-            border.color:   qgcPal.text
-            opacity: 0.5
-            radius: width*0.1
+//        Rectangle {
+//            id: cameraRect
+//            anchors.fill: parent
+//            color: "white"
+//            border.color:   qgcPal.text
+//            opacity: 0.5
+//            radius: width*0.1
 
-            Column {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: 20
+//            Column {
+//                anchors.horizontalCenter: parent.horizontalCenter
+//                anchors.verticalCenter: parent.verticalCenter
+//                spacing: 20
 
-                QGCColoredImage {
-                    id:                 camIcon
-                    width:              height
-                    height:             120
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    source:             "/qmlimages/camera_switch.png"
-                    fillMode:           Image.PreserveAspectFit
-                    color:              "black"
-                }
+//                QGCColoredImage {
+//                    id:                 camIcon
+//                    width:              height
+//                    height:             120
+//                    anchors.horizontalCenter: parent.horizontalCenter
+//                    source:             "/qmlimages/camera_switch.png"
+//                    fillMode:           Image.PreserveAspectFit
+//                    color:              "black"
+//                }
 
-                QGCSwitch {
-                    id:             camSwitch
-                    enabled:        true
-                    checked:        false
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    style: SwitchStyle {
-                            groove: Rectangle {
-                                implicitWidth: 180
-                                implicitHeight: 100
-                                border.width: 1
-                                color: camSwitch.checked ? "orange" : "#bdbebf"
-                                radius: 30
-                            }
-                            handle: Rectangle {
-                                implicitWidth: 90
-                                implicitHeight: 100
-                                radius: 30
-                            }
-                        }
-                    onCheckedChanged: {
-                        if(checked) {
-                             _activeVehicle.sendCommand(_activeVehicle,183,false,1)
-                        } else {
-                             _activeVehicle.sendCommand(_activeVehicle,183,false,0)
-                        }
-                    }
-                }
-            }
-        }
-        Timer {
-            interval: 10000; running: true; repeat: true
-            onTriggered: {
-                _activeVehicle.sendCommand(_activeVehicle,184,false,_activeVehicle.getRopeLenght())
-            }
-        }
-    }
+//                QGCSwitch {
+//                    id:             camSwitch
+//                    enabled:        true
+//                    checked:        false
+//                    anchors.horizontalCenter: parent.horizontalCenter
+//                    style: SwitchStyle {
+//                            groove: Rectangle {
+//                                implicitWidth: 180
+//                                implicitHeight: 100
+//                                border.width: 1
+//                                color: camSwitch.checked ? "orange" : "#bdbebf"
+//                                radius: 30
+//                            }
+//                            handle: Rectangle {
+//                                implicitWidth: 90
+//                                implicitHeight: 100
+//                                radius: 30
+//                            }
+//                        }
+//                    onCheckedChanged: {
+//                        if(checked) {
+//                             _activeVehicle.sendCommand(_activeVehicle,183,false,1)
+//                        } else {
+//                             _activeVehicle.sendCommand(_activeVehicle,183,false,0)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        Timer {
+//            interval: 10000; running: true; repeat: true
+//            onTriggered: {
+//                _activeVehicle.sendCommand(_activeVehicle,184,false,_activeVehicle.getRopeLenght())
+//            }
+//        }
+//    }
 
     property real deg2rad: (3.1416/180)
     function getReachValue()
@@ -404,7 +404,467 @@ QGCView {
         }
     }
 
+    Item{
+        id: camera_downward
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 10
+        height: 250
+        width: height
+        z: 50
+        visible: _activeVehicle? true : false
 
+
+        Rectangle {
+            id: bottomSensorRect
+            anchors.fill: parent
+            color: "white"
+            border.color:   qgcPal.text
+            opacity: 0.5
+            radius: width*0.2
+
+//            Row {
+//                id: bottomSensorCol
+//                anchors.bottom: parent.bottom
+//                height: parent.height/2.5
+
+//                QGCColoredImage {
+//                    anchors.top:                parent.top
+//                    anchors.bottom:             parent.bottom
+//                    anchors.left:               bottomSensorRect.left
+//                    width:                      height
+//                    sourceSize.width:           width
+//                    source:                     "/qmlimages/bottom_sensor.svg"
+//                    fillMode:                   Image.PreserveAspectFit
+//                    color:                      "black"
+//    //                opacity:                    0.5
+//                    rotation:                   180
+//                }
+//                Label {
+//                    anchors.top:        parent.top
+//                    anchors.bottom:     parent.bottom
+//                    anchors.right:      bottomSensorRect.right
+//                    verticalAlignment:  Text.AlignVCenter
+//                    text:               (_activeVehicle.sensorsHealthBits-30)>20?((_activeVehicle.sensorsHealthBits-30)/100).toFixed(2):"<0.20" + " m"
+//                    font.pointSize:     ScreenTools.mediumFontPointSize
+//                    color:              (_activeVehicle.sensorsHealthBits-30)>100?"black":"red"
+//                }
+//            }
+            QGCColoredImage {
+                anchors.top:                parent.top
+                anchors.bottom:             bottomSensorCol.top
+                anchors.left:               parent.left
+                anchors.right:              parent.right
+                width:                      height*1.4
+                sourceSize.width:           width
+                source:                     "/qmlimages/CameraIcon.svg"
+                fillMode:                   Image.PreserveAspectFit
+                color:                      "black"
+    //            opacity:                    0.5
+                rotation:                   180 - (_activeVehicle.sensorsPresentBits-90)
+            }
+        }
+    }
+
+    property bool _lighting_visible: false
+    property int sliderWidth: 500
+
+    //-- LightingController
+    Item {
+        anchors.top:    parent.top
+        anchors.right:    parent.right
+        anchors.topMargin: 150
+        anchors.rightMargin: 10
+        height: 100
+        width:  height
+        z: 50
+        visible: _activeVehicle ? true : false
+        Rectangle {
+            anchors.fill: parent
+            color: "white"
+            border.color:   qgcPal.text
+            opacity: 0.5
+            radius: width*0.2
+            QGCColoredImage {
+                id:                 lightingIcon
+                anchors.fill:       parent
+                anchors.margins:    5
+                sourceSize.width:   width
+                source:             "/qmlimages/bulb.png"
+                fillMode:           Image.PreserveAspectFit
+                color:              qgcPal.text
+            }
+        }
+        MouseArea {
+            anchors.fill:   parent
+            onClicked: {
+                _lighting_visible = !_lighting_visible
+            }
+        }
+    }
+
+
+    Item {
+        id: ligthingPopUp
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        width:  parent.width - 300
+        height: 400
+        visible: false // change to next line to activate full LED control
+        // visible: _lighting_visible && _activeVehicle ? true : false
+        z: 50
+
+
+        Rectangle {
+            anchors.fill: parent
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            radius: ScreenTools.defaultFontPixelHeight * 0.5
+            color:  qgcPal.window
+            border.color:   qgcPal.text
+            opacity: 0.75
+
+            Row {
+                id:                 lightRow
+                spacing:            ScreenTools.defaultFontPixelHeight * 5
+                anchors.margins:    ScreenTools.defaultFontPixelHeight
+                anchors.fill:       parent
+                anchors.horizontalCenter: parent.horizontalCenter
+                opacity: 1.0
+
+                Column {
+                    anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                    anchors.verticalCenter: parent.verticalCenter
+                    QGCLabel {
+                        text:           qsTr("UP LEFT")
+                        font.family:    ScreenTools.demiboldFontFamily
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    QGCSlider {
+                        id:         led1Slider
+                        height:     50
+                        width:      sliderWidth
+                        stepSize:   0.05
+                        orientation: Qt.Horizontal
+                        style: SliderStyle {
+                            handle: Rectangle {
+                                anchors.centerIn:   parent
+                                color:              qgcPal.button
+                                border.color:       qgcPal.buttonText
+                                border.width:       1
+                                implicitWidth:      _radius * 2
+                                implicitHeight:     _radius * 2
+                                radius:             _radius
+
+                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 0.65)
+                            }
+                        }
+
+                        onValueChanged: _activeVehicle.sendCommand(_activeVehicle,181,false,led1Slider.value,
+                                                                    led2Slider.value,led3Slider.value,led4Slider.value,led5Slider.value)
+                    }
+                    Rectangle {
+                        opacity: 0
+                        height: 100
+                        width: 10
+                    }
+
+                    QGCLabel {
+                        text:           qsTr("DOWN LEFT")
+                        font.family:    ScreenTools.demiboldFontFamily
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    QGCSlider {
+                        id:         led2Slider
+                        height:     50
+                        width:      sliderWidth
+                        stepSize:   0.05
+                        orientation: Qt.Horizontal
+                        style: SliderStyle {
+                            handle: Rectangle {
+                                anchors.centerIn:   parent
+                                color:              qgcPal.button
+                                border.color:       qgcPal.buttonText
+                                border.width:       1
+                                implicitWidth:      _radius * 2
+                                implicitHeight:     _radius * 2
+                                radius:             _radius
+
+                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 0.65)
+                            }
+                        }
+
+                        onValueChanged: _activeVehicle.sendCommand(_activeVehicle,181,false,led1Slider.value,
+                                                                    led2Slider.value,led3Slider.value,led4Slider.value,led5Slider.value)
+                    }
+                }
+                Column {
+                    anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                    anchors.verticalCenter: parent.verticalCenter
+                    QGCLabel {
+                        text:           qsTr("CENTER BEAM")
+                        font.family:    ScreenTools.demiboldFontFamily
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    QGCSlider {
+                        id:         led3Slider
+                        height:     50
+                        width:      sliderWidth
+                        stepSize:   0.05
+                        orientation: Qt.Horizontal
+                        style: SliderStyle {
+                            handle: Rectangle {
+                                anchors.centerIn:   parent
+                                color:              qgcPal.button
+                                border.color:       qgcPal.buttonText
+                                border.width:       1
+                                implicitWidth:      _radius * 2
+                                implicitHeight:     _radius * 2
+                                radius:             _radius
+
+                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 0.65)
+                            }
+                        }
+
+                        onValueChanged: _activeVehicle.sendCommand(_activeVehicle,181,false,led1Slider.value,
+                                                                    led2Slider.value,led3Slider.value,led4Slider.value,led5Slider.value)
+                    }
+                }
+                Column {
+                    anchors.margins:    ScreenTools.defaultFontPixelHeight
+                    spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    QGCLabel {
+                        text:           qsTr("UP RIGHT")
+                        font.family:    ScreenTools.demiboldFontFamily
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    QGCSlider {
+                        id:         led4Slider
+                        height:     50
+                        width:      sliderWidth
+                        stepSize:   0.05
+                        orientation: Qt.Horizontal
+                        style: SliderStyle {
+                            handle: Rectangle {
+                                anchors.centerIn:   parent
+                                color:              qgcPal.button
+                                border.color:       qgcPal.buttonText
+                                border.width:       1
+                                implicitWidth:      _radius * 2
+                                implicitHeight:     _radius * 2
+                                radius:             _radius
+
+                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 0.65)
+                            }
+                        }
+
+                        onValueChanged: _activeVehicle.sendCommand(_activeVehicle,181,false,led1Slider.value,
+                                                                    led2Slider.value,led3Slider.value,led4Slider.value,led5Slider.value)
+                    }
+                    Rectangle {
+                        opacity: 0
+                        height: 100
+                        width: 10
+                    }
+                    QGCLabel {
+                        text:           qsTr("DOWN RIGHT")
+                        font.family:    ScreenTools.demiboldFontFamily
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    QGCSlider {
+                        id:         led5Slider
+                        height:     50
+                        width:      sliderWidth
+                        stepSize:   0.05
+                        orientation: Qt.Horizontal
+                        style: SliderStyle {
+                            handle: Rectangle {
+                                anchors.centerIn:   parent
+                                color:              qgcPal.button
+                                border.color:       qgcPal.buttonText
+                                border.width:       1
+                                implicitWidth:      _radius * 2
+                                implicitHeight:     _radius * 2
+                                radius:             _radius
+
+                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 0.65)
+                            }
+                        }
+
+                        onValueChanged: _activeVehicle.sendCommand(_activeVehicle,181,false,led1Slider.value,
+                                                                    led2Slider.value,led3Slider.value,led4Slider.value,led5Slider.value)
+                    }
+                }
+            }
+        }
+    }
+
+    Item {
+        id: ligthingMinimalPopUp
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        width:  parent.width / 1.5
+        height: 550
+        visible: _lighting_visible && _activeVehicle ? true : false
+        z: 50
+
+
+        Rectangle {
+            anchors.fill: parent
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            radius: ScreenTools.defaultFontPixelHeight * 0.5
+            color:  qgcPal.window
+            border.color:   qgcPal.text
+            opacity: 0.75
+
+
+            Column {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                QGCLabel {
+                    text:           qsTr("LED POWER")
+                    font.family:    ScreenTools.boldFontFamily
+                    font.pointSize:         ScreenTools.largeFontPointSize
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                QGCSwitch {
+                    id:             ledSwitch
+                    enabled:        true
+                    checked:        false
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    style: SwitchStyle {
+                            groove: Rectangle {
+                                    implicitWidth: 300
+                                    implicitHeight: 60
+                                    border.width: 1
+                                    color: ledSwitch.checked ? "orange" : "#bdbebf"
+                            }
+                        }
+                    onCheckedChanged: {
+                        if(checked) {
+                            _activeVehicle.sendCommand(_activeVehicle,181,false,ambientLEDSlider.value,
+                                       ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
+                        } else {
+                            _activeVehicle.sendCommand(_activeVehicle,181,false,0,0,0,0,0)
+                        }
+                    }
+                }
+
+                Rectangle {
+                    opacity: 0
+                    height: 100
+                    width: 10
+                }
+
+                anchors.margins:    ScreenTools.defaultFontPixelHeight
+                spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+                anchors.verticalCenter: parent.verticalCenter
+                QGCLabel {
+                    text:           qsTr("LED INTENSITY")
+                    font.family:    ScreenTools.boldFontFamily
+                    font.pointSize:         ScreenTools.largeFontPointSize
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                QGCSlider {
+                    id:         ambientLEDSlider
+                    height:     80
+                    width:      800
+                    stepSize:   0.05
+                    value:      0.5
+                    orientation: Qt.Horizontal
+                    style: SliderStyle {
+                        handle: Rectangle {
+                            anchors.centerIn:   parent
+                            color:              qgcPal.button
+                            border.color:       qgcPal.buttonText
+                            border.width:       1
+                            implicitWidth:      _radius * 2
+                            implicitHeight:     _radius * 2
+                            radius:             _radius
+
+                            property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 1.5)
+                        }
+                        groove: Rectangle {
+                            implicitWidth: 800
+                            implicitHeight: 60
+                            height: implicitHeight
+                            radius: 20
+                            color: "#bdbebf"
+
+                            Rectangle {
+                                implicitHeight: 60
+                                color: ledSwitch.checked ? "orange" : "#bdbebf"
+                                radius: 20
+                                implicitWidth: ambientLEDSlider.value * ambientLEDSlider.width
+                            }
+                        }
+                    }
+
+                    onValueChanged: if(ledSwitch.checked)
+                            _activeVehicle.sendCommand(_activeVehicle,181,false,ambientLEDSlider.value,
+                                    ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
+                }
+                Rectangle {
+                    opacity: 0
+                    height: 100
+                    width: 10
+                }
+
+                QGCLabel {
+                    text:           qsTr("BEAM INTENSITY")
+                    font.family:    ScreenTools.boldFontFamily
+                    font.pointSize:         ScreenTools.largeFontPointSize
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    visible: false
+                }
+                QGCSlider {
+                    id:         beamSlider
+                    height:     80
+                    width:      800
+                    stepSize:   0.05
+                    orientation: Qt.Horizontal
+                    visible:    false
+                    style: SliderStyle {
+                        handle: Rectangle {
+                            anchors.centerIn:   parent
+                            color:              qgcPal.button
+                            border.color:       qgcPal.buttonText
+                            border.width:       1
+                            implicitWidth:      _radius * 2
+                            implicitHeight:     _radius * 2
+                            radius:             _radius
+
+                            property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 1.5)
+                        }
+                        groove: Rectangle {
+                            implicitWidth: 800
+                            implicitHeight: 60
+                            height: implicitHeight
+                            radius: 20
+                            color: "#bdbebf"
+
+                            Rectangle {
+                                implicitHeight: 60
+                                color: ledSwitch.checked ? "orange" : "#bdbebf"
+                                radius: 20
+                                implicitWidth: beamSlider.value * beamSlider.width
+                            }
+                        }
+                    }
+
+                    onValueChanged: if(ledSwitch.checked)
+                            _activeVehicle.sendCommand(_activeVehicle,181,false,ambientLEDSlider.value,
+                                    ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
+                }
+            }
+        }
+    }
 
 
 
