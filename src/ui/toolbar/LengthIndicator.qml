@@ -56,7 +56,7 @@ Item {
             width:              height
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
-            source:             "/qmlimages/length.svg"
+            source:             "/qmlimages/length.png"
             fillMode:           Image.PreserveAspectFit
             sourceSize.height:  height
             color: "black"

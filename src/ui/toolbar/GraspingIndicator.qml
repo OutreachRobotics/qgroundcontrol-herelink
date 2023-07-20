@@ -43,19 +43,19 @@ Item {
             color: "white"
             opacity: 0
         }
-        Rectangle {
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: 1
-            color: qgcPal.text
-        }
-        Rectangle {
-            width: ScreenTools.defaultFontPixelWidth
-            height: 10
-            anchors.verticalCenter: parent.verticalCenter
-            color: "white"
-            opacity: 0
-        }
+//        Rectangle {
+//            anchors.top: parent.top
+//            anchors.bottom: parent.bottom
+//            width: 1
+//            color: qgcPal.text
+//        }
+//        Rectangle {
+//            width: ScreenTools.defaultFontPixelWidth
+//            height: 10
+//            anchors.verticalCenter: parent.verticalCenter
+//            color: "white"
+//            opacity: 0
+//        }
 
 //        QGCColoredImage {
 //            id:                 shearsIcon

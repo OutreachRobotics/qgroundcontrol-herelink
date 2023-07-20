@@ -15,7 +15,7 @@
         <file alias="JoystickIndicator.qml">src/ui/toolbar/JoystickIndicator.qml</file>
         <file alias="LinkIndicator.qml">src/ui/toolbar/LinkIndicator.qml</file>
         <file alias="GraspingIndicator.qml">src/ui/toolbar/GraspingIndicator.qml</file>
-        <file>src/ui/toolbar/LengthIndicator.qml</file>
+        <file alias="LengthIndicator.qml">src/ui/toolbar/LengthIndicator.qml</file>
     </qresource>
     <qresource prefix="/qml">
         <file alias="CorridorScanEditor.qml">src/PlanView/CorridorScanEditor.qml</file>

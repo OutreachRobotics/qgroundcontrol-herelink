@@ -452,15 +452,16 @@ QGCView {
 //            }
             QGCColoredImage {
                 anchors.top:                parent.top
-                anchors.bottom:             bottomSensorCol.top
+                anchors.bottom:             parent.bottom
                 anchors.left:               parent.left
                 anchors.right:              parent.right
+                anchors.margins:            30
                 width:                      height*1.4
                 sourceSize.width:           width
                 source:                     "/qmlimages/CameraIcon.svg"
                 fillMode:                   Image.PreserveAspectFit
                 color:                      "black"
-    //            opacity:                    0.5
+                opacity:                    1.0
                 rotation:                   180 - (_activeVehicle.sensorsPresentBits-90)
             }
         }
@@ -749,7 +750,7 @@ QGCView {
                     onCheckedChanged: {
                         if(checked) {
                             _activeVehicle.sendCommand(_activeVehicle,181,false,ambientLEDSlider.value,
-                                       ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
+                                       ambientLEDSlider.value,ambientLEDSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
                         } else {
                             _activeVehicle.sendCommand(_activeVehicle,181,false,0,0,0,0,0)
                         }
@@ -808,7 +809,7 @@ QGCView {
 
                     onValueChanged: if(ledSwitch.checked)
                             _activeVehicle.sendCommand(_activeVehicle,181,false,ambientLEDSlider.value,
-                                    ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
+                                    ambientLEDSlider.value,ambientLEDSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
                 }
                 Rectangle {
                     opacity: 0
@@ -860,7 +861,7 @@ QGCView {
 
                     onValueChanged: if(ledSwitch.checked)
                             _activeVehicle.sendCommand(_activeVehicle,181,false,ambientLEDSlider.value,
-                                    ambientLEDSlider.value,beamSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
+                                    ambientLEDSlider.value,ambientLEDSlider.value,ambientLEDSlider.value,ambientLEDSlider.value)
                 }
             }
         }
