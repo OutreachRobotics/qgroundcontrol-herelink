@@ -195,6 +195,8 @@
         <file alias="shears.png">src/ui/toolbar/Images/shears.png</file>
         <file alias="bulb.png">src/ui/toolbar/Images/bulb.png</file>
         <file alias="length.png">src/ui/toolbar/Images/length.png</file>
+        <file alias="stabilize.png">src/ui/toolbar/Images/Stabilize.png</file>
+        <file alias="contact.png">src/ui/toolbar/Images/contact.png</file>
     </qresource>
     <qresource prefix="/res">
         <file alias="action.svg">resources/action.svg</file>

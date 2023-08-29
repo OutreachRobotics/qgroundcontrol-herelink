@@ -65,15 +65,14 @@ Item {
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             verticalAlignment:  Text.AlignVCenter
-            text:               (-_activeVehicle.altitudeRelative.value + _atitude_offset).toFixed(2) + " m"
+            text:               (_activeVehicle.altitudeRelative.value.toFixed(1) + " m")
             font.pointSize:     ScreenTools.mediumFontPointSize
             color:              qgcPal.buttonText
         }
-
     }
     MouseArea {
         anchors.fill:   lengthRow
-        onDoubleClicked:      _atitude_offset=_activeVehicle.altitudeRelative.value
+        onDoubleClicked:      _activeVehicle.sendCommand(_activeVehicle, 182, false, 0)
     }
 
 }

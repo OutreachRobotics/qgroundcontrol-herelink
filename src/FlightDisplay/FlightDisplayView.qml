@@ -226,12 +226,6 @@ QGCView {
 //                }
 //            }
 //        }
-//        Timer {
-//            interval: 10000; running: true; repeat: true
-//            onTriggered: {
-//                _activeVehicle.sendCommand(_activeVehicle,184,false,_activeVehicle.getRopeLenght())
-//            }
-//        }
 //    }
 
     property real deg2rad: (3.1416/180)

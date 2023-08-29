@@ -17,6 +17,7 @@ import QtQuick.Layouts          1.2
 import QtQuick.Window           2.2
 import QtQml.Models             2.1
 import QtMultimedia             5.5
+import QtQuick.Extras           1.4
 
 import QGroundControl               1.0
 import QGroundControl.Airspace      1.0
@@ -269,7 +270,7 @@ Item {
                 color:  qgcPal.window
                 border.color:   qgcPal.text
                 opacity: 0.75
-                width:  ropeLengthSlider.width + ScreenTools.defaultFontPixelWidth*4
+                width:  780
                 height: 780
 
                 Column {
@@ -278,111 +279,41 @@ Item {
                     spacing:            ScreenTools.defaultFontPixelHeight * 0.5
                     anchors.verticalCenter: parent.verticalCenter
 
+
+
                     QGCLabel {
-                        text:           qsTr("ROPE LENGTH")
+                        text:           qsTr("CONTROLLER SWITCH")
                         font.family:    ScreenTools.boldFontFamily
                         font.pointSize:         ScreenTools.largeFontPointSize
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
-                    QGCSlider {
-                        id:         ropeLengthSlider
-                        height:     80
-                        width:      800
-                        value:     ( _activeVehicle.getRopeLenght()-5)/15
-                        stepSize:   0.3333
-                        orientation: Qt.Horizontal
-                        style: SliderStyle {
-                            handle: Rectangle {
-                                anchors.centerIn:   parent
-                                color:              qgcPal.button
-                                border.color:       qgcPal.buttonText
-                                border.width:       1
-                                implicitWidth:      _radius * 2
-                                implicitHeight:     _radius * 2
-                                radius:             _radius
-
-                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 1.5)
-                            }
-                            groove: Rectangle {
-                                implicitWidth: 800
-                                implicitHeight: 60
-                                height: implicitHeight
-                                radius: 20
-                                color: "#bdbebf"
-
-                                Rectangle {
-                                    implicitHeight: 60
-                                    color: "orange"
-                                    radius: 20
-                                    implicitWidth: ropeLengthSlider.value * ropeLengthSlider.width
+                    QGCSwitch {
+                        id:             controlSwitch
+                        enabled:        true
+                        checked:        false
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        style: SwitchStyle {
+                                groove: Rectangle {
+                                    implicitWidth: 180
+                                    implicitHeight: 100
+                                    border.width: 1
+                                    color: controlSwitch.checked ? "orange" : "#bdbebf"
+                                    radius: 30
+                                }
+                                handle: Rectangle {
+                                    implicitWidth: 90
+                                    implicitHeight: 100
+                                    radius: 30
                                 }
                             }
-                        }
-                        onValueChanged: _activeVehicle.setRopeLenght((ropeLengthSlider.value*15+5).toFixed(0))
-                    }
-
-                    QGCLabel {
-                        text:           (ropeLengthSlider.value*15+5).toFixed(0) + " m"
-                        font.family:    ScreenTools.boldFontFamily
-                        font.pointSize:         ScreenTools.largeFontPointSize
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-
-                    Rectangle {
-                        opacity: 0
-                        height: 100
-                        width: 10
-                    }
-
-                    QGCLabel {
-                        text:           qsTr("PARAM2")
-                        font.family:    ScreenTools.boldFontFamily
-                        font.pointSize:         ScreenTools.largeFontPointSize
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    QGCSlider {
-                        id:         param2Slider
-                        height:     80
-                        width:      800
-                        stepSize:   0.05
-                        orientation: Qt.Horizontal
-                        style: SliderStyle {
-                            handle: Rectangle {
-                                anchors.centerIn:   parent
-                                color:              qgcPal.button
-                                border.color:       qgcPal.buttonText
-                                border.width:       1
-                                implicitWidth:      _radius * 2
-                                implicitHeight:     _radius * 2
-                                radius:             _radius
-
-                                property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 1.5)
-                            }
-                            groove: Rectangle {
-                                implicitWidth: 800
-                                implicitHeight: 60
-                                height: implicitHeight
-                                radius: 20
-                                color: "#bdbebf"
-
-                                Rectangle {
-                                    implicitHeight: 60
-                                    color: "orange"
-                                    radius: 20
-                                    implicitWidth: param2Slider.value * param2Slider.width
-                                }
+                        onCheckedChanged: {
+                            if(checked) {
+                                 _activeVehicle.sendCommand(_activeVehicle,184,false,1)
+                            } else {
+                                 _activeVehicle.sendCommand(_activeVehicle,184,false,0)
                             }
                         }
-
-//                        onValueChanged:
                     }
-                    QGCLabel {
-                        text:           (param2Slider.value*100).toFixed(0)
-                        font.family:    ScreenTools.boldFontFamily
-                        font.pointSize:         ScreenTools.largeFontPointSize
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-
                 }
                 Component.onCompleted: {
                     var pos = mapFromItem(toolBar, centerX, toolBar.height)
@@ -497,13 +428,13 @@ Item {
                         font.family:            ScreenTools.demiboldFontFamily
                         verticalAlignment: Text.AlignVCenter
 
-//                        MouseArea {
-//                            anchors.fill:   parent
-//                            onClicked: {
-//                                var centerX = mapToItem(toolBar, x, y).x  + (width / 2)
-//                                mainWindow.showPopUp(mambaParameters, centerX)
-//                            }
-//                        }
+                        MouseArea {
+                            anchors.fill:   parent
+                            onClicked: {
+                                var centerX = mapToItem(toolBar, x, y).x  + (width / 2)
+                                mainWindow.showPopUp(mambaParameters, centerX)
+                            }
+                        }
                    }
                 }
                 Component.onCompleted: {

@@ -105,32 +105,32 @@ Item {
             width:              height
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
-            source:             "/qmlimages/taxi.svg"
+            source:             "/qmlimages/stabilize.png"
             fillMode:           Image.PreserveAspectFit
             sourceSize.height:  height
             color:              "black"
             visible:            _activeVehicle.sensorsEnabledBits ? true : false
         }
 
-//        Rectangle {
-//            width: ScreenTools.defaultFontPixelWidth
-//            height: 10
-//            anchors.verticalCenter: parent.verticalCenter
-//            color: "white"
-//            opacity: 0
-//        }
+        Rectangle {
+            width: ScreenTools.defaultFontPixelWidth
+            height: 10
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            opacity: 0
+        }
 
-//        QGCColoredImage {
-//            id:                 wristIcon
-//            width:              height
-//            anchors.top:        parent.top
-//            anchors.bottom:     parent.bottom
-//            source:             "/qmlimages/robot_wrist.png"
-//            fillMode:           Image.PreserveAspectFit
-//            sourceSize.height:  height
-//            color:              "black"
-//            visible:            _activeVehicle.sensorsHealthBits ? true : false
-//        }
+        QGCColoredImage {
+            id:                 wristIcon
+            width:              height
+            anchors.top:        parent.top
+            anchors.bottom:     parent.bottom
+            source:             "/qmlimages/contact.png"
+            fillMode:           Image.PreserveAspectFit
+            sourceSize.height:  height
+            color:              "black"
+            visible:            _activeVehicle.sensorsHealthBits ? true : false
+        }
 
 
     }
