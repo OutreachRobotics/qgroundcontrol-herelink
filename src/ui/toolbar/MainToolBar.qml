@@ -112,6 +112,7 @@ Rectangle {
                 source:             "/qmlimages/Gears.svg"
 //                color:              "#F26E1A"
                 onClicked:          toolBar.showSetupView()
+                visible:            false
             }
 
             QGCToolBarButton {
@@ -122,6 +123,14 @@ Rectangle {
                 source:             "/qmlimages/Plan.svg"
                 onClicked:          toolBar.showPlanView()
                 visible:            false
+            }
+
+            Rectangle {
+                width: ScreenTools.defaultFontPixelWidth
+                height: 10
+                anchors.verticalCenter: parent.verticalCenter
+                color: "white"
+                opacity: 0
             }
 
             QGCToolBarButton {

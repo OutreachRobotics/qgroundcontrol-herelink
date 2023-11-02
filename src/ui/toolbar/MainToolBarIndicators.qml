@@ -202,7 +202,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: "HX4060751300310"
+                            text: "HX4062113601333"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
@@ -215,19 +215,19 @@ Item {
                         }
 
                         QGCLabel {
-                            text: qsTr("DeLeaves Serial Number:")
+                            text: qsTr("SPY II Serial Number:")
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: _activeVehicle? " " + _activeVehicle.sensorsEnabledBits : "Not Connected"
+                            text: "094923629"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: qsTr("DeLeaves Firmware Version:")
+                            text: qsTr("SPY II Firmware Version:")
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: _activeVehicle ? " " + _activeVehicle.sensorsHealthBits + "." + _activeVehicle.sensorsPresentBits + "." + Math.round(_activeVehicle.battery.current.value*100) : "Not Connected"
+                            text: "2.0.1"
                             verticalAlignment: Text.AlignVCenter
                         }
                     }
