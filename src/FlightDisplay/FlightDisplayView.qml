@@ -301,7 +301,7 @@ QGCView {
                 fillMode:                   Image.PreserveAspectFit
                 color:                      "black"
     //            opacity:                    0.5
-                rotation:                   180 - (_activeVehicle.sensorsPresentBits-90)
+                rotation:                   180 + (_activeVehicle.sensorsPresentBits-90)
             }
         }
     }
