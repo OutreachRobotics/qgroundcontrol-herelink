@@ -210,7 +210,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: "HX4060751300310"
+                            text: "HX4062112B00080"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
@@ -227,7 +227,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: _activeVehicle? " " + "555555555" : " Not Connected"
+                            text: _activeVehicle? " " + "000000000" : " Not Connected"
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
@@ -235,7 +235,7 @@ Item {
                             verticalAlignment: Text.AlignVCenter
                         }
                         QGCLabel {
-                            text: _activeVehicle ? " 3.0.0" : " Not Connected"
+                            text: _activeVehicle ? " 3.0.1" : " Not Connected"
                             verticalAlignment: Text.AlignVCenter
                         }
                     }
@@ -335,12 +335,14 @@ Item {
                     }
 
                     QGCLabel {
+                        visible:        false
                         text:           qsTr("PARAM2")
                         font.family:    ScreenTools.boldFontFamily
                         font.pointSize:         ScreenTools.largeFontPointSize
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                     QGCSlider {
+                        visible:    false
                         id:         param2Slider
                         height:     80
                         width:      800
@@ -377,6 +379,7 @@ Item {
 //                        onValueChanged:
                     }
                     QGCLabel {
+                        visible:        false
                         text:           (param2Slider.value*100).toFixed(0)
                         font.family:    ScreenTools.boldFontFamily
                         font.pointSize:         ScreenTools.largeFontPointSize
@@ -408,7 +411,7 @@ Item {
                     anchors.centerIn:   parent
                     width:              1645
                     height:             720
-                    source:             "/qmlimages/deleavesController.png"
+                    source:             "/qmlimages/mambaController.png"
                     fillMode:           Image.PreserveAspectFit
                 }
 
