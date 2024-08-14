@@ -2984,7 +2984,7 @@ QString Vehicle::_vehicleIdSpeech(void)
 
 void Vehicle::_handleFlightModeChanged(const QString& flightMode)
 {
-    _say(QString("%1 %2").arg(_vehicleIdSpeech()).arg(QString(tr("Mamba sampling tool connected"))));
+    _say(QString("%1 %2").arg(_vehicleIdSpeech()).arg(QString(tr("Project X platform connected"))));
 }
 
 void Vehicle::_announceArmedChanged(bool armed)

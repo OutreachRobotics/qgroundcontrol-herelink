@@ -154,7 +154,7 @@ Item {
                 id:                     waitForVehicle
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin:     ScreenTools.defaultFontPixelWidth * 4
-                text:                   qsTr("Waiting For Mamba Connection")
+                text:                   qsTr("Waiting For Project X Platform")
                 font.pointSize:         ScreenTools.mediumFontPointSize
                 font.family:            ScreenTools.demiboldFontFamily
                 color:                  qgcPal.colorRed
@@ -288,8 +288,8 @@ Item {
                         id:         ropeLengthSlider
                         height:     80
                         width:      800
-                        value:     ( _activeVehicle.getRopeLenght()-5)/15
-                        stepSize:   0.3333
+                        value:     ( _activeVehicle.getRopeLenght()-5)/45
+                        stepSize:   0.025
                         orientation: Qt.Horizontal
                         style: SliderStyle {
                             handle: Rectangle {
@@ -318,11 +318,11 @@ Item {
                                 }
                             }
                         }
-                        onValueChanged: _activeVehicle.setRopeLenght((ropeLengthSlider.value*15+5).toFixed(0))
+                        onValueChanged: _activeVehicle.setRopeLenght((ropeLengthSlider.value*45+5).toFixed(0))
                     }
 
                     QGCLabel {
-                        text:           (ropeLengthSlider.value*15+5).toFixed(0) + " m"
+                        text:           (ropeLengthSlider.value*45+5).toFixed(0) + " m"
                         font.family:    ScreenTools.boldFontFamily
                         font.pointSize:         ScreenTools.largeFontPointSize
                         anchors.horizontalCenter: parent.horizontalCenter

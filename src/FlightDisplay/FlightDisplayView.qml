@@ -172,7 +172,8 @@ QGCView {
         height: camIcon.height+camSwitch.height+ScreenTools.defaultFontPixelHeight*1.5
         width: camSwitch.width+ScreenTools.defaultFontPixelWidth*2
         z: 50
-        visible: _activeVehicle ? true : false
+        // visible: _activeVehicle ? true : false
+        visible: false
 
         Rectangle {
             id: cameraRect
